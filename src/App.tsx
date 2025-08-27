@@ -1,10 +1,14 @@
 import { useState } from "react";
+
+import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+
 
 function App() {
   const [count, setCount] = useState(0);
   return (
     <>
+      <Header />
       <div className="h-screen w-full flex items-center justify-center bg-gray-900">
         <button
           onClick={() => setCount((count) => count + 1)}
