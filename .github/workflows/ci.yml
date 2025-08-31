@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main, development ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.17.0'
+      - name: Install dependencies
+        run: yarn install
+      - name: Run linter
+        run: yarn lint
+      - name: Run tests
+        run: yarn test
+      - name: Run build
+        run: yarn build
