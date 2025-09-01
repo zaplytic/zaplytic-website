@@ -4,11 +4,11 @@ This is the official website for Zaplytic.
 
 ## Tech Stack
 
-*   **Framework:** [React](https://react.dev/)
-*   **Language:** [TypeScript](https://www.typescriptlang.org/)
-*   **Build Tool:** [Vite](https://vitejs.dev/)
-*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-*   **Testing:** [Vitest](https://vitest.dev/)
+- **Framework:** [React](https://react.dev/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Testing:** [Vitest](https://vitest.dev/)
 
 ## Getting Started
 
@@ -16,8 +16,8 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-*   [Node.js](https://nodejs.org/en/) (v20.x or higher)
-*   [Yarn](https://yarnpkg.com/)
+- [Node.js](https://nodejs.org/en/) (v20.x or higher)
+- [Yarn](https://yarnpkg.com/)
 
 ### Installation
 
@@ -52,6 +52,7 @@ Lints the code using ESLint.
 Serves the production build locally.
 
 ### `yarn test`
+
 Launches the test runner in the interactive watch mode.
 
 ## Contributing

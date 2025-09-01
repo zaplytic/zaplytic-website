@@ -32,4 +32,3 @@ If the changes involve UI or visual elements, please provide screenshots or vide
 ## Additional Notes (Optional)
 
 Any additional information or context that reviewers should be aware of.
-
