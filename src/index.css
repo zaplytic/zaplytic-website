@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+/* break-point for tablet devices */
+@custom-variant tb (@media (max-width: 45rem));
+/* break-point for mobile devices -- previous rule overrided */
+@custom-variant mb (@media (max-width: 30rem)); 
