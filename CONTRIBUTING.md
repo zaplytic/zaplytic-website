@@ -27,6 +27,7 @@ Commit your changes with a clear and descriptive commit message. We follow the [
 In addition to the Conventional Commits standard, we have a preferred format for the commit message body to enhance clarity and traceability.
 
 **Format:**
+
 ```
 <type>: <subject>
 
@@ -37,6 +38,7 @@ resolves #<issue_number>
 ```
 
 **Example:**
+
 ```
 feature: Add user authentication endpoint
 
