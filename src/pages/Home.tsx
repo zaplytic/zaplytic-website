@@ -1,13 +1,15 @@
-import About from "@/components/About";
+import ContactForm from "@/components/ContactForm";
 import Hero from "@/components/Hero";
-import Links from "@/components/Links";
+import Services from "@/components/Services";
+import Works from "@/components/Works";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <About />
-      <Links />
+      <Services />
+      <Works />
+      <ContactForm />
     </>
   );
 }
