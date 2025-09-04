@@ -4,3 +4,27 @@
 @custom-variant tb (@media (max-width: 67.5rem));
 /* break-point for mobile devices -- previous rule overridden */
 @custom-variant mb (@media (max-width: 45rem)); 
+
+@layer base {
+  a {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .fs--sm {
+    font-size: clamp(0.5rem, 0.2624rem + 0.7905vw, 0.875rem);
+  }
+  .fs--base {
+    font-size: clamp(0.625rem, 0.3874rem + 0.7905vw, 1rem);
+  }
+  .fs--lg {
+    font-size: clamp(0.75rem, 0.5124rem + 0.7905vw, 1.125rem);
+  }
+  .fs--xl {
+    font-size: clamp(0.875rem, 0.6374rem + 0.7905vw, 1.25rem);
+  }
+  .fs--2xl {
+    font-size: clamp(1rem, 0.6831rem + 1.054vw, 1.5rem);
+  }
+}
