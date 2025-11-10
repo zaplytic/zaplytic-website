@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function Hero() {
   useGSAP(() => {
-    const titleSplit = SplitText.create("#hero-title", { type: "words" });
+    const titleSplit = SplitText.create("#hero-title-start, #hero-title-end", { type: "words" });
     const subtitleSplit = SplitText.create("#hero-subtitle", { type: "lines" })
 
     gsap.from(titleSplit.words, {
@@ -24,7 +24,7 @@ export default function Hero() {
       duration: 1
     })
 
-    const wordsTimeline = gsap.timeline({ repeat: -1 });
+    const wordsTimeline = gsap.timeline({ repeat: -1, delay: 0.3 });
     const words: HTMLSpanElement[] = gsap.utils.toArray("#hero-words span");
 
     words.forEach((word) => {
@@ -34,25 +34,20 @@ export default function Hero() {
     })
 
     gsap.from("#hero-action", { opacity: 0, yPercent: 100, duration: 1, ease: "power4.inOut" })
-
-    return () => {
-      titleSplit.revert();
-      subtitleSplit.revert();
-    }
   }, [])
 
   return (
     <div className="relative overflow-hidden">
       <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-24 pb-10">
         <div className="mt-5 max-w-3xl text-center mx-auto">
-          <h1 id="hero-title" className="block font-bold text-gray-800 text-4xl md:text-5xl lg:text-6xl dark:text-neutral-200">
-            Empowering {" "}
-            <span id="hero-words" className="inline-grid overflow-hidden justify-items-start [&>*]:col-start-1 [&>*]:col-end-2 [&>*]:row-start-1 [&>*]:row-end-2 ">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">Developers</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">Businesses</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">Individuals</span>
+          <h1 className="block font-bold text-gray-800 text-4xl md:text-5xl lg:text-6xl dark:text-neutral-200">
+            <span id="hero-title-start">Empowering {" "}</span>
+            <span id="hero-words" className="mr-2 inline-grid overflow-hidden justify-items-start [&>*]:col-start-1 [&>*]:col-end-2 [&>*]:row-start-1 [&>*]:row-end-2">
+              <span className=" text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">Developers</span>
+              <span className=" text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">Businesses</span>
+              <span className=" text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">Individuals</span>
             </span>
-            with Open-Source Products
+            <span id="hero-title-end">with Open-Source Products</span>
           </h1>
         </div>
 
