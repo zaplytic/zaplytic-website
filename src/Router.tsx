@@ -14,6 +14,6 @@ const router = createBrowserRouter([
       { path: "blog", Component: Blog }
     ]
   }
-])
+]);
 
 export default router;

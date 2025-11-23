@@ -8,7 +8,11 @@ export default function Header() {
     <header className="sticky top-4 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full before:absolute before:inset-0 before:max-w-7xl before:mx-2 lg:before:mx-auto before:rounded-[15px] before:bg-neutral-800/30 before:backdrop-blur-md">
       <nav className="relative max-w-7xl w-full flex flex-wrap md:flex-nowrap basis-full items-center justify-between py-2 ps-5 pe-2 md:py-0 mx-2 lg:mx-auto">
         <div className="flex items-center">
-          <Link className="flex gap-2 rounded-md text-2xl items-center font-semibold focus:outline-hidden focus:opacity-80" to="/" aria-label="Zaplytic">
+          <Link
+            className="flex gap-2 rounded-md text-2xl items-center font-semibold focus:outline-hidden focus:opacity-80"
+            to="/"
+            aria-label="Zaplytic"
+          >
             <img src="/favicon.svg" className="h-6" alt="Zaplytic logo" />
             <span className="text-gray-900 dark:text-gray-200 font-extrabold italic">Zaplytic</span>
           </Link>
@@ -16,18 +20,85 @@ export default function Header() {
 
         <div className="flex items-center gap-1 md:order-4 md:ms-4">
           <div className="md:hidden">
-            <button type="button" onClick={() => { menu.current?.classList.toggle("hidden") }} className="hs-collapse-toggle flex justify-center items-center size-9.5 border border-gray-200 text-gray-500 rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" id="hs-navbar-header-floating-collapse" aria-expanded="false" aria-controls="hs-navbar-header-floating" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-header-floating">
-              <svg aria-hidden="true" className="hs-collapse-open:hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" x2="21" y1="6" y2="6" /><line x1="3" x2="21" y1="12" y2="12" /><line x1="3" x2="21" y1="18" y2="18" /></svg>
-              <svg aria-hidden="true" className="hs-collapse-open:block hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            <button
+              type="button"
+              onClick={() => {
+                menu.current?.classList.toggle("hidden");
+              }}
+              className="hs-collapse-toggle flex justify-center items-center size-9.5 border border-gray-200 text-gray-500 rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+              id="hs-navbar-header-floating-collapse"
+              aria-expanded="false"
+              aria-controls="hs-navbar-header-floating"
+              aria-label="Toggle navigation"
+              data-hs-collapse="#hs-navbar-header-floating"
+            >
+              <svg
+                aria-hidden="true"
+                className="hs-collapse-open:hidden shrink-0 size-3.5"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="3" x2="21" y1="6" y2="6" />
+                <line x1="3" x2="21" y1="12" y2="12" />
+                <line x1="3" x2="21" y1="18" y2="18" />
+              </svg>
+              <svg
+                aria-hidden="true"
+                className="hs-collapse-open:block hidden shrink-0 size-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
             </button>
           </div>
         </div>
 
-        <div ref={menu} className="hidden overflow-hidden transition-all duration-300 basis-full grow md:block">
+        <div
+          ref={menu}
+          className="hidden overflow-hidden transition-all duration-300 basis-full grow md:block"
+        >
           <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-2 md:gap-3 mt-3 md:mt-0 py-2 md:py-0 md:ps-7">
-            <NavLink className={({ isActive, isPending }) => isPending ? "" : isActive ? "activeNav" : "inActiveNav"} to="/" aria-current="page">Home</NavLink>
-            <NavLink className={({ isActive, isPending }) => isPending ? "" : isActive ? "activeNav" : "inActiveNav"} to="/products">Products</NavLink>
-            <NavLink className={({ isActive, isPending }) => isPending ? "" : isActive ? "activeNav" : "inActiveNav"} to="/blog">Blog</NavLink>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending ? "" : isActive ? "activeNav" : "inActiveNav"
+              }
+              to="/"
+              aria-current="page"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending ? "" : isActive ? "activeNav" : "inActiveNav"
+              }
+              to="/products"
+            >
+              Products
+            </NavLink>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending ? "" : isActive ? "activeNav" : "inActiveNav"
+              }
+              to="/blog"
+            >
+              Blog
+            </NavLink>
           </div>
         </div>
       </nav>

@@ -41,10 +41,10 @@ const icons: ImageData[] = [
   { name: "PostgreSQL", src: postgresIcon, height: 40, width: 197 },
   { name: "Express", src: expressIcon, height: 40, width: 177 },
   { name: "Golang", src: golangLogo, height: 40, width: 107 },
-  { name: "Phoenix", src: phoenixLogo, height: 40, width: 180 },
+  { name: "Phoenix", src: phoenixLogo, height: 40, width: 180 }
 ];
 
-const marqueeElements = [...icons, ...icons]
+const marqueeElements = [...icons, ...icons];
 
 export default function Marquee({ isReversed }: MarqueeProps) {
   const movingContainer = useRef<HTMLDivElement | null>(null);
@@ -52,24 +52,25 @@ export default function Marquee({ isReversed }: MarqueeProps) {
 
   useGSAP(() => {
     gsap.set(movingContainer.current, {
-      xPercent: isReversed ? -50 : 0,
-    })
+      xPercent: isReversed ? -50 : 0
+    });
 
-    timeline.current = gsap.timeline({ defaults: { ease: "none", repeat: -1 } })
+    timeline.current = gsap
+      .timeline({ defaults: { ease: "none", repeat: -1 } })
       .to(movingContainer.current, {
         xPercent: isReversed ? 0 : -50,
-        duration: 25,
+        duration: 25
       })
       .set(movingContainer.current, { xPercent: 0 });
-  }, [isReversed])
+  }, [isReversed]);
 
   const onPointerEnter = () => {
     timeline.current?.timeScale(0.3);
-  }
+  };
 
   const onPointerLeave = () => {
     timeline.current?.timeScale(1);
-  }
+  };
 
   const list = useMemo(
     () => (
@@ -82,20 +83,29 @@ export default function Marquee({ isReversed }: MarqueeProps) {
               className={`relative flex shrink-0 items-center justify-center ${isLast ? "mr-10" : ""}`}
               style={{ height: elem.height, width: elem.width }}
             >
-              <img src={elem.src} height={40} alt={`${elem.name} logo`} className="object-contain w-full h-full" />
+              <img
+                src={elem.src}
+                height={40}
+                alt={`${elem.name} logo`}
+                className="object-contain w-full h-full"
+              />
             </div>
-          )
+          );
         })}
       </div>
-    ), []
-  )
+    ),
+    []
+  );
 
   return (
     <div
       className="max-w-full overflow-hidden"
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
-      style={{ maskImage: "linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%)" }}
+      style={{
+        maskImage:
+          "linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%)"
+      }}
     >
       <div ref={movingContainer} className="flex w-fit">
         {list}
