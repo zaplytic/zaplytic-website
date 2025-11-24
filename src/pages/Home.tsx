@@ -4,7 +4,7 @@ import TechStack from "@/components/TechStack";
 
 export default function Home() {
   return (
-    <main>
+    <main data-testid="homepage">
       <Hero />
       <TechStack />
       <LatestBlogs />
