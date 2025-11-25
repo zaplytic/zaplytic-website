@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 export default function Header() {
-  const menu = useRef<HTMLDivElement | null>(null);
+  const menu = useRef<HTMLDivElement>(null);
 
   return (
     <header className="sticky top-4 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full before:absolute before:inset-0 before:max-w-7xl before:mx-2 lg:before:mx-auto before:rounded-[15px] before:bg-neutral-800/30 before:backdrop-blur-md">
@@ -23,7 +23,9 @@ export default function Header() {
             <button
               type="button"
               onClick={() => {
-                menu.current?.classList.toggle("hidden");
+                if (menu.current != null) {
+                  menu.current.classList.toggle("hidden");
+                }
               }}
               className="hs-collapse-toggle flex justify-center items-center size-9.5 border border-gray-200 text-gray-500 rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
               id="hs-navbar-header-floating-collapse"
@@ -79,7 +81,6 @@ export default function Header() {
                 isPending ? "" : isActive ? "activeNav" : "inActiveNav"
               }
               to="/"
-              aria-current="page"
             >
               Home
             </NavLink>

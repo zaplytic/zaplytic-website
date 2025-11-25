@@ -4,7 +4,7 @@ import { screen } from "@testing-library/react";
 import { renderPathWithRouter } from "test-setup";
 
 suite("Navigation", () => {
-  test("header logo link and Home link should point to Homepage", async () => {
+  test("header logo link should refer to Homepage", async () => {
     const user = userEvent.setup();
     renderPathWithRouter();
     const logoLink = screen.getByLabelText("Zaplytic");
@@ -20,5 +20,23 @@ suite("Navigation", () => {
     expect(screen.getByTestId("homepage")).toBeInTheDocument();
   });
 
-  test("");
+  const navLinks = [
+    { name: /^blog$/i, testId: "blogindex" },
+    { name: /^products$/i, testId: "productspage" },
+    { name: /^home$/i, testId: "homepage" }
+  ];
+
+  test("navlinks should navigate to the correct page and have active styles", async () => {
+    const user = userEvent.setup();
+    renderPathWithRouter();
+
+    for (const { name, testId } of navLinks) {
+      const link = screen.getByRole("link", { name });
+      await user.click(link);
+
+      expect(screen.getByTestId(testId)).toBeInTheDocument();
+      expect(link).toHaveClass("activeNav");
+      expect(link).toHaveAttribute("aria-current", "page");
+    }
+  });
 });

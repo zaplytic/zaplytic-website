@@ -1,17 +1,18 @@
-import gsapIcon from "../../assets/technologies/gsap.svg";
-import nextIcon from "../../assets/technologies/next.svg";
-import reactIcon from "../../assets/technologies/react.svg";
-import tailwindIcon from "../../assets/technologies/tailwind.svg";
-import typescriptIcon from "../../assets/technologies/typescript.svg";
-import jestIcon from "../../assets/technologies/jest.svg";
-import angularIcon from "../../assets/technologies/angular.svg";
-import railsIcon from "../../assets/technologies/rails.svg";
-import reactNativeIcon from "../../assets/technologies/react-native.svg";
-import expoIcon from "../../assets/technologies/expo.svg";
-import postgresIcon from "../../assets/technologies/postgres.svg";
-import expressIcon from "../../assets/technologies/express.svg";
-import golangLogo from "../../assets/technologies/go.svg";
-import phoenixLogo from "../../assets/technologies/phoenix.svg";
+import gsapIcon from "@/assets/technologies/gsap.svg";
+import nextIcon from "@/assets/technologies/next.svg";
+import reactIcon from "@/assets/technologies/react.svg";
+import tailwindIcon from "@/assets/technologies/tailwind.svg";
+import typescriptIcon from "@/assets/technologies/typescript.svg";
+import jestIcon from "@/assets/technologies/jest.svg";
+import vitestIcon from "@/assets/technologies/vitest.svg";
+import angularIcon from "@/assets/technologies/angular.svg";
+import railsIcon from "@/assets/technologies/rails.svg";
+import reactNativeIcon from "@/assets/technologies/react-native.svg";
+import expoIcon from "@/assets/technologies/expo.svg";
+import postgresIcon from "@/assets/technologies/postgres.svg";
+import expressIcon from "@/assets/technologies/express.svg";
+import golangLogo from "@/assets/technologies/go.svg";
+import phoenixLogo from "@/assets/technologies/phoenix.svg";
 import { useMemo, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -35,6 +36,7 @@ const icons: ImageData[] = [
   { name: "React Native", src: reactNativeIcon, height: 40, width: 190 },
   { name: "Typescript", src: typescriptIcon, height: 40, width: 198 },
   { name: "Jest", src: jestIcon, height: 40, width: 107 },
+  { name: "Vitest", src: vitestIcon, height: 40, width: 165 },
   { name: "Angular", src: angularIcon, height: 40, width: 163 },
   { name: "Rails", src: railsIcon, height: 40, width: 115 },
   { name: "Expo", src: expoIcon, height: 40, width: 120 },

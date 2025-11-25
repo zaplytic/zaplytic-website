@@ -45,25 +45,25 @@ export default function Hero() {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-24 pb-10">
+      <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-24 pb-10">
         <div className="mt-5 max-w-3xl text-center mx-auto">
           <h1 className="block font-bold text-gray-800 text-4xl md:text-5xl lg:text-6xl dark:text-neutral-200">
             <span id="hero-title-start">Empowering </span>
             <span
               id="hero-words"
-              className="mr-2 inline-grid overflow-hidden justify-items-start [&>*]:col-start-1 [&>*]:col-end-2 [&>*]:row-start-1 [&>*]:row-end-2"
+              className="mr-2 inline-grid overflow-hidden justify-items-start *:col-start-1 *:col-end-2 *:row-start-1 *:row-end-2"
             >
-              <span className=" text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">
+              <span className=" text-transparent bg-clip-text bg-linear-to-r from-cyan-500 to-lime-500">
                 Developers
               </span>
-              <span className=" text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">
+              <span className=" text-transparent bg-clip-text bg-linear-to-r from-cyan-500 to-lime-500">
                 Businesses
               </span>
-              <span className=" text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-lime-500">
+              <span className=" text-transparent bg-clip-text bg-linear-to-r from-cyan-500 to-lime-500">
                 Individuals
               </span>
             </span>
-            <span id="hero-title-end">with Open-Source Products</span>
+            <span id="hero-title-end">with Open-Source products</span>
           </h1>
         </div>
 
@@ -75,7 +75,7 @@ export default function Hero() {
         </div>
         <div className="mt-16 gap-3 flex justify-center" id="hero-action">
           <Link
-            className="inline-flex justify-center items-center gap-x-3 text-center transition-colors duration-1000 bg-gradient-to-l from-cyan-500 to-lime-500 hover:from-lime-500 hover:to-cyan-500 focus:from-lime-500 focus:to-cyan-500 focus:outline-none border border-transparent text-gray-900 text-sm font-medium rounded-full py-3 px-4"
+            className="inline-flex justify-center items-center gap-x-3 text-center transition-colors duration-1000 bg-linear-to-l from-cyan-500 to-lime-500 hover:from-lime-500 hover:to-cyan-500 focus:from-lime-500 focus:to-cyan-500 focus:outline-none border border-transparent text-gray-900 text-sm font-medium rounded-full py-3 px-4"
             to="/products"
           >
             <svg
