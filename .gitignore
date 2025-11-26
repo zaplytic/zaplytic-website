@@ -24,3 +24,5 @@ issues
 *.njsproj
 *.sln
 *.sw?
+public/blogs.json
+coverage/

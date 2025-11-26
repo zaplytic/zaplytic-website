@@ -1,8 +1,10 @@
 import { createBrowserRouter, type RouteObject } from "react-router";
-import Home from "./pages/Home";
-import App from "./App";
-import Products from "./pages/Products";
-import Blog from "./pages/Blog";
+import Home from "@/pages/Home";
+import App from "@/App";
+import Products from "@/pages/Products";
+import BlogIndex from "@/pages/BlogIndex";
+import BlogPost from "@/pages/BlogPost";
+import { loadBlog, loadBlogs } from "./loaders/blog";
 
 export const routes: RouteObject[] = [
   {
@@ -11,7 +13,17 @@ export const routes: RouteObject[] = [
     children: [
       { index: true, Component: Home },
       { path: "products", Component: Products },
-      { path: "blog", Component: Blog }
+      {
+        path: "blog",
+        children: [
+          {
+            index: true,
+            Component: BlogIndex,
+            loader: loadBlogs
+          },
+          { path: ":slug", Component: BlogPost, loader: loadBlog }
+        ]
+      }
     ]
   }
 ];

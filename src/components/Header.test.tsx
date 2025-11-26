@@ -34,6 +34,8 @@ suite("Navigation", () => {
       const link = screen.getByRole("link", { name });
       await user.click(link);
 
+      await screen.findByTestId(testId);
+
       expect(screen.getByTestId(testId)).toBeInTheDocument();
       expect(link).toHaveClass("activeNav");
       expect(link).toHaveAttribute("aria-current", "page");

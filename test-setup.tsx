@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 import { render, cleanup, type RenderOptions } from "@testing-library/react";
-import { afterEach } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { routes } from "./src/Router";
 import type { ReactElement, ReactNode } from "react";
@@ -9,6 +9,55 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 afterEach(cleanup);
+
+export const mockBlogs = [
+  {
+    slug: "first-test-post",
+    title: "First Test Post",
+    description: "This is the first test blog post",
+    date: "2024-11-26",
+    content: "<h1>First Post</h1><p>Content for first post</p>",
+    author: "Test Author",
+    tags: ["test", "first"],
+    featured: true
+  },
+  {
+    slug: "second-test-post",
+    title: "Second Test Post",
+    description: "This is the second test blog post",
+    date: "2024-11-25",
+    content: "<h1>Second Post</h1><p>Content for second post</p>",
+    author: "Test Author",
+    tags: ["test", "second"],
+    featured: false
+  },
+  {
+    slug: "third-test-post",
+    title: "Third Test Post",
+    description: "This is the third test blog post",
+    date: "2024-11-24",
+    content: "<h1>Third Post</h1><p>Content for third post</p>",
+    author: "Another Author",
+    tags: ["test", "third"],
+    featured: false
+  }
+];
+
+beforeEach(() => {
+  global.fetch = vi.fn().mockImplementation((url) => {
+    if (url === "/blogs.json" || url.includes("blogs.json")) {
+      return Promise.resolve({
+        ok: true,
+        json: async () => mockBlogs
+      });
+    }
+
+    return Promise.resolve({
+      ok: false,
+      status: 404
+    });
+  });
+});
 
 interface RenderWithRouterOptions extends Omit<RenderOptions, "wrapper"> {
   initialEntries?: string[];

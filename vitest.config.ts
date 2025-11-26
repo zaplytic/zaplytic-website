@@ -6,6 +6,9 @@ export default defineConfig({
   plugins: [react(), tsConfigPaths()],
   test: {
     environment: "happy-dom",
-    setupFiles: ["test-setup.tsx"]
+    setupFiles: ["test-setup.tsx"],
+    coverage: {
+      exclude: ["**/*.js", "**/*.config.ts", "**/*.d.ts"]
+    }
   }
 });
