@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import type { BlogPost } from "@/loaders/blog";
-import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 
 export default function BlogPost() {
@@ -39,39 +39,17 @@ export default function BlogPost() {
   );
 }
 
-function PostMetaData({ post }: { post: BlogPost }) {
+export function PostMetaData({ post }: { post: BlogPost }) {
   const siteUrl = "https://zaplytic.dev";
   const postUrl = `${siteUrl}/blog/${post.slug}`;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.description,
-    author: {
-      "@type": "Person",
-      name: post.author
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Zaplytic", // Replace with your company name
-      logo: {
-        "@type": "ImageObject",
-        url: `${siteUrl}/logo.png` // Your logo URL
-      }
-    },
-    datePublished: post.date,
-    dateModified: post.date,
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": postUrl
-    },
-    keywords: post.tags.join(", ")
-  };
+  useEffect(() => {
+    document.title = `${post.title} | Zaplytic`;
+  }, [post.title]);
 
   return (
-    <Helmet>
-      <title>{post.title} | Your Blog Name</title>
+    <>
+      <title>{post.title} | Zaplytic</title>
       <meta name="description" content={post.description} />
       <meta name="keywords" content={post.tags.join(", ")} />
       <meta name="author" content={post.author} />
@@ -81,7 +59,7 @@ function PostMetaData({ post }: { post: BlogPost }) {
       <meta property="og:title" content={post.title} />
       <meta property="og:description" content={post.description} />
       <meta property="og:url" content={postUrl} />
-      <meta property="og:site_name" content="Your Company Name" />
+      <meta property="og:site_name" content="Zaplytic" />
       <meta property="article:published_time" content={post.date} />
       <meta property="article:author" content={post.author} />
       {post.tags.map((tag) => (
@@ -92,8 +70,6 @@ function PostMetaData({ post }: { post: BlogPost }) {
       <meta name="twitter:title" content={post.title} />
       <meta name="twitter:description" content={post.description} />
       <meta name="twitter:creator" content="@nullscribe" /> {/* Your Twitter handle */}
-      {/* JSON-LD Structured Data */}
-      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-    </Helmet>
+    </>
   );
 }

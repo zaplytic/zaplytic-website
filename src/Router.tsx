@@ -10,6 +10,7 @@ export const routes: RouteObject[] = [
   {
     path: "/",
     Component: App,
+    hydrateFallbackElement: <div>Loading...</div>,
     children: [
       { index: true, Component: Home },
       { path: "products", Component: Products },
