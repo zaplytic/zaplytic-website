@@ -1,14 +1,29 @@
-import { products, type Product } from "../loaders/product";
+import { products, type Product } from "@/loaders/product";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function Products() {
+  useGSAP(() => {
+    gsap.from(".product", {
+      scale: 0.5,
+      opacity: 0,
+      duration: 0.2,
+      stagger: 0.05
+    });
+    gsap.from(".title,.subtitle", {
+      yPercent: 100,
+      opacity: 0,
+      duration: 0.3
+    });
+  }, []);
   return (
     <div className="bg-neutral-50 dark:bg-neutral-900 py-12 sm:py-16" data-testid="productspage">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-200 sm:text-4xl">
+          <h2 className="title text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-200 sm:text-4xl">
             Our Products
           </h2>
-          <p className="mt-6 text-lg leading-8 text-neutral-600 dark:text-neutral-400">
+          <p className="subtitle mt-6 text-lg leading-8 text-neutral-600 dark:text-neutral-400">
             A showcase of our projects and experiments.
           </p>
         </div>
@@ -16,7 +31,7 @@ export default function Products() {
           {products.map((product: Product) => (
             <div
               key={product.name}
-              className="flex flex-col justify-between rounded-2xl bg-neutral-50 dark:bg-neutral-800 p-6 shadow-lg"
+              className="product flex flex-col justify-between rounded-2xl bg-neutral-50 dark:bg-neutral-800 p-6 shadow-lg"
             >
               <div>
                 <img
