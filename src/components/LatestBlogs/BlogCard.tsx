@@ -1,25 +1,33 @@
-export interface BlogCardProps {
-  title: string;
-  href: string;
-  category: string;
-  img?: string;
-}
+import type { BlogPost } from "@/loaders/blog";
+import { Link } from "react-router-dom";
 
-export default function BlogCard({ title, category, img, href }: BlogCardProps) {
+type BlogCardProps = Omit<BlogPost, "date" | "author" | "featured" | "content" | "description">;
+
+export default function BlogCard({ title, tags, slug }: BlogCardProps) {
   return (
-    <a
-      className="group flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl hover:shadow-md focus:outline-hidden focus:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800"
-      href={href}
+    <Link
+      className="group flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl hover:shadow-md focus:outline-hidden focus:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800 h-full"
+      to={`/blog/${slug}`}
     >
-      <div className="aspect-w-16 aspect-h-9">
-        <img className="w-full object-cover rounded-t-xl" src={img} alt={`Blog Image: ${title}`} />
+      <div className="p-4 md:p-5 flex flex-col grow justify-between">
+        <div>
+          <h3 className="text-xl font-semibold text-gray-800 group-hover:text-blue-600 dark:text-neutral-300 dark:group-hover:text-white">
+            {title}
+          </h3>
+        </div>
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center py-0.5 px-2 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
-      <div className="p-4 md:p-5">
-        <p className="mt-2 text-xs uppercase text-gray-600 dark:text-neutral-400">{category}</p>
-        <h3 className="mt-2 text-lg font-medium text-gray-800 group-hover:text-blue-600 dark:text-neutral-300 dark:group-hover:text-white">
-          {title}
-        </h3>
-      </div>
-    </a>
+    </Link>
   );
 }

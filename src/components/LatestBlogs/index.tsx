@@ -1,45 +1,38 @@
 import { useGSAP } from "@gsap/react";
-import BlogCard, { type BlogCardProps } from "./BlogCard";
+import BlogCard from "./BlogCard";
 import gsap from "gsap";
-
-const blogs: BlogCardProps[] = [
-  {
-    title: "Better is when everything works together",
-    category: "Product",
-    href: "#",
-    img: "https://images.unsplash.com/photo-1633114128174-2f8aa49759b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=560&h=360"
-  },
-  {
-    title: "What CFR really is about",
-    category: "Business",
-    href: "#",
-    img: "https://images.unsplash.com/photo-1562851529-c370841f6536?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=560&h=360"
-  },
-  {
-    title: "Should Product Owners think like entrepreneurs?",
-    category: "Business",
-    href: "#",
-    img: "https://images.unsplash.com/photo-1521321205814-9d673c65c167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=560&h=360"
-  },
-  {
-    title: "Announcing Front Strategies: Ready-to-use rules",
-    category: "Facilities",
-    href: "#",
-    img: "https://images.unsplash.com/photo-1669739432571-aee1f057c41f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=560&h=360"
-  }
-];
+import { type BlogPost, loadBlogs } from "@/loaders/blog";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function LatestBlogs() {
+  // TODO: use react 19's use hook in here
+  const [blogs, setBlogs] = useState<BlogPost[] | null>(null);
+
   useGSAP(() => {
-    gsap.from("#latest-blog-title, #latest-blog-subtitle", {
-      opacity: 0,
-      yPercent: 100,
-      scrollTrigger: {
-        trigger: "#latest-blog-title",
-        start: "top 80%"
-      }
-    });
-  }, []);
+    if (blogs) {
+      gsap.from("#latest-blog-title, .blogcard, #latest-blog-subtitle", {
+        opacity: 0,
+        yPercent: 100,
+        scrollTrigger: {
+          trigger: "#latest-blog-title",
+          start: "top 80%"
+        }
+      });
+    }
+  }, [blogs]);
+
+  const setBlogSlice = async () => {
+    setBlogs(await loadBlogs());
+  };
+
+  useEffect(() => {
+    setBlogSlice();
+  }, [blogs]);
+
+  if (blogs === null) {
+    return <div>Loading....</div>;
+  }
 
   return (
     <div className="max-w-7xl px-4 py-10 sm:px-6  lg:py-14 mx-auto">
@@ -56,8 +49,10 @@ export default function LatestBlogs() {
       </div>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 mb-10 lg:mb-14">
-        {blogs.map((blog, index) => (
-          <BlogCard {...blog} key={index} />
+        {blogs.slice(0, 4).map((blog) => (
+          <div className="blogcard" key={blog.slug}>
+            <BlogCard title={blog.title} slug={blog.slug} tags={blog.tags} />
+          </div>
         ))}
       </div>
 
@@ -65,9 +60,9 @@ export default function LatestBlogs() {
         <div className="inline-block bg-white border border-gray-200 shadow-2xs rounded-full dark:bg-neutral-900 dark:border-neutral-800">
           <div className="py-3 px-4 flex items-center gap-x-2">
             <p className="text-gray-600 dark:text-neutral-400">Want to read more?</p>
-            <a
+            <Link
               className="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
-              href="#"
+              to="/blog"
             >
               Go here
               <svg
@@ -85,7 +80,7 @@ export default function LatestBlogs() {
               >
                 <path d="m9 18 6-6-6-6" />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -31,7 +31,7 @@ export default function Products() {
           {products.map((product: Product) => (
             <div
               key={product.name}
-              className="product flex flex-col justify-between rounded-2xl bg-neutral-50 dark:bg-neutral-800 p-6 shadow-lg"
+              className="product flex flex-col justify-between rounded-2xl bg-neutral-50 dark:bg-neutral-800 p-4 md:p-6 shadow-lg"
             >
               <div>
                 <img
@@ -39,13 +39,13 @@ export default function Products() {
                   src={product.image}
                   alt={product.name}
                 />
-                <h3 className="mt-6 text-2xl font-bold leading-9 tracking-tight text-neutral-900 dark:text-neutral-200">
+                <h3 className="mt-4 md:mt-6 text-2xl font-bold leading-9 tracking-tight text-neutral-900 dark:text-neutral-200">
                   {product.name}
                 </h3>
-                <p className="mt-4 text-base leading-7 text-neutral-600 dark:text-neutral-400">
+                <p className="mt-2 md:mt-4 text-base leading-7 text-neutral-600 dark:text-neutral-400">
                   {product.description}
                 </p>
-                <div className="mt-6 flex flex-wrap gap-2">
+                <div className="mt-4 md:mt-6 flex flex-wrap gap-2">
                   {product.technologies.map((tech) => (
                     <span
                       key={tech}
@@ -56,13 +56,13 @@ export default function Products() {
                   ))}
                 </div>
               </div>
-              <div className="mt-8 flex items-center gap-x-4">
+              <div className="mt-6 md:mt-8 flex items-center gap-x-4">
                 {product.liveLink && (
                   <a
                     href={product.liveLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Live Demo
                   </a>

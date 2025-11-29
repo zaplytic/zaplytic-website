@@ -7,17 +7,17 @@ suite("Navigation", () => {
   test("header logo link should refer to Homepage", async () => {
     const user = userEvent.setup();
     renderPathWithRouter();
-    const logoLink = screen.getByLabelText("Zaplytic");
+    const logoLink = await screen.findByLabelText("Zaplytic");
     expect(logoLink).toBeInTheDocument();
     expect(logoLink).toHaveAttribute("href", "/");
 
     await user.click(logoLink);
-    const navHomeLink = screen.getByText("Home");
+    const navHomeLink = await screen.findByText("Home");
     expect(navHomeLink).toHaveAttribute("href", "/");
 
     expect(navHomeLink).toHaveClass("activeNav");
 
-    expect(screen.getByTestId("homepage")).toBeInTheDocument();
+    expect(await screen.findByTestId("homepage")).toBeInTheDocument();
   });
 
   const navLinks = [
@@ -31,12 +31,12 @@ suite("Navigation", () => {
     renderPathWithRouter();
 
     for (const { name, testId } of navLinks) {
-      const link = screen.getByRole("link", { name });
+      const link = await screen.findByRole("link", { name });
       await user.click(link);
 
-      await screen.findByTestId(testId);
+      const page = await screen.findByTestId(testId);
 
-      expect(screen.getByTestId(testId)).toBeInTheDocument();
+      expect(page).toBeInTheDocument();
       expect(link).toHaveClass("activeNav");
       expect(link).toHaveAttribute("aria-current", "page");
     }

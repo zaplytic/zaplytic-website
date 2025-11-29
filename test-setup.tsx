@@ -44,8 +44,8 @@ export const mockBlogs = [
 ];
 
 beforeEach(() => {
-  global.fetch = vi.fn().mockImplementation((url) => {
-    if (url === "/blogs.json" || url.includes("blogs.json")) {
+  vi.stubGlobal("fetch", vi.fn().mockImplementation((url) => {
+    if (String(url).includes("blogs.json")) {
       return Promise.resolve({
         ok: true,
         json: async () => mockBlogs
@@ -56,7 +56,11 @@ beforeEach(() => {
       ok: false,
       status: 404
     });
-  });
+  }));
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
 });
 
 interface RenderWithRouterOptions extends Omit<RenderOptions, "wrapper"> {

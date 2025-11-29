@@ -13,27 +13,27 @@ export interface BlogPost {
 
 let blogPosts: null | BlogPost[] = null;
 
-export async function loadBlogs() {
+export async function loadBlogs(): Promise<BlogPost[]> {
   if (blogPosts) return blogPosts;
 
   const response = await fetch("/blogs.json");
   blogPosts = await response.json();
-  return blogPosts;
+  return blogPosts ? blogPosts : [];
 }
 
-export async function loadBlog({ params }: LoaderFunctionArgs) {
+export async function loadBlog({ params }: LoaderFunctionArgs): Promise<BlogPost | null> {
   const blogs = await loadBlogs();
 
   if (!blogs || blogs.length === 0) {
     console.error("There is no blog to see");
-    return;
+    return null;
   }
 
   const post = blogs.find((blog) => blog.slug === params.slug);
 
   if (!post) {
     console.error("There is no blog to see");
-    return;
+    return null;
   }
 
   return post;
