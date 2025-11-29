@@ -13,7 +13,7 @@ export interface Product {
   image: string;
 }
 
-export const products: Product[] = [
+export const products = [
   {
     name: "railguard",
     description: "A powerful, self-hosted crash reporting, performance and error monitoring tool.",
@@ -50,4 +50,4 @@ export const products: Product[] = [
     githubLink: "https://github.com/zaplytic/adorn",
     image: adorn
   }
-];
+] satisfies Product[];

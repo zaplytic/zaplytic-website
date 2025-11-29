@@ -81,6 +81,7 @@ export default function Header() {
                 isPending ? "" : isActive ? "activeNav" : "inActiveNav"
               }
               to="/"
+              onClick={() => menu.current?.classList.toggle("hidden")}
             >
               Home
             </NavLink>
@@ -89,6 +90,7 @@ export default function Header() {
                 isPending ? "" : isActive ? "activeNav" : "inActiveNav"
               }
               to="/products"
+              onClick={() => menu.current?.classList.toggle("hidden")}
             >
               Products
             </NavLink>
@@ -97,6 +99,7 @@ export default function Header() {
                 isPending ? "" : isActive ? "activeNav" : "inActiveNav"
               }
               to="/blog"
+              onClick={() => menu.current?.classList.toggle("hidden")}
             >
               Blog
             </NavLink>

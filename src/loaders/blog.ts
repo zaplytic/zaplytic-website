@@ -7,18 +7,25 @@ export interface BlogPost {
   date: string;
   tags: string[];
   author: string;
-  featured: string;
+  featured: boolean;
   content: string;
 }
 
 let blogPosts: null | BlogPost[] = null;
 
 export async function loadBlogs(): Promise<BlogPost[]> {
-  if (blogPosts) return blogPosts;
-
-  const response = await fetch("/blogs.json");
-  blogPosts = await response.json();
-  return blogPosts ? blogPosts : [];
+  try {
+    const response = await fetch("/blogs.json");
+    if (!response.ok) {
+      console.error(`Failed to fetch blogs: ${response.status}`);
+      return [];
+    }
+    blogPosts = await response.json();
+    return blogPosts ?? [];
+  } catch (error) {
+    console.error("Error loading blogs:", error);
+    return [];
+  }
 }
 
 export async function loadBlog({ params }: LoaderFunctionArgs): Promise<BlogPost | null> {

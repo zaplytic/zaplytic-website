@@ -36,7 +36,7 @@ try {
 
       blogPosts.push({
         ...validatedData,
-        content: marked(content)
+        content: await marked(content)
       });
 
       console.log(`✓ Successfully processed ${file.name}`);
@@ -53,7 +53,12 @@ try {
     }
   }
 
-  blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  blogPosts.sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+
+    return (dateB || 0) - (dateA || 0);
+  });
 
   fs.writeFileSync("public/blogs.json", JSON.stringify(blogPosts));
 

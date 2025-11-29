@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export default function LatestBlogs() {
   // TODO: use react 19's use hook in here
   const [blogs, setBlogs] = useState<BlogPost[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useGSAP(() => {
     if (blogs) {
@@ -23,12 +24,20 @@ export default function LatestBlogs() {
   }, [blogs]);
 
   const setBlogSlice = async () => {
-    setBlogs(await loadBlogs());
+    try {
+      setBlogs(await loadBlogs());
+    } catch (error) {
+      setError(`Failed to load blogs:${error}`);
+    }
   };
 
   useEffect(() => {
     setBlogSlice();
-  }, [blogs]);
+  }, []);
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
 
   if (blogs === null) {
     return <div>Loading....</div>;

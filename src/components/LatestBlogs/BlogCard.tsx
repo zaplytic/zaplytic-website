@@ -1,7 +1,7 @@
 import type { BlogPost } from "@/loaders/blog";
 import { Link } from "react-router-dom";
 
-type BlogCardProps = Omit<BlogPost, "date" | "author" | "featured" | "content" | "description">;
+type BlogCardProps = Pick<BlogPost, "slug" | "title" | "tags">;
 
 export default function BlogCard({ title, tags, slug }: BlogCardProps) {
   return (

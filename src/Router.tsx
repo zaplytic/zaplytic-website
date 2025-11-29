@@ -4,7 +4,7 @@ import App from "@/App";
 import Products from "@/pages/Products";
 import BlogIndex from "@/pages/BlogIndex";
 import BlogPost from "@/pages/BlogPost";
-import { loadBlog, loadBlogs } from "./loaders/blog";
+import { loadBlog, loadBlogs } from "@/loaders/blog";
 
 export const routes: RouteObject[] = [
   {
