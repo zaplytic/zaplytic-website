@@ -1,2 +1,2 @@
-npm lint
-npm test
+bun run lint
+bun run test
