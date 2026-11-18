@@ -10,7 +10,7 @@ featured: true
 
 We've all been in the PR review where the reviewer skimmed the diff, typed "looks good", and approved. Code review is one of the highest-leverage quality activities in software development, and it's also the one most consistently done badly. AI-assisted review won't replace human reviewers, but it can make them dramatically more effective — if you set it up correctly. I've been running GLM-5.2 as a first-pass reviewer on every PR for three months now, and this is what I've learned.
 
-### Why GLM-5.2 and Not the Others?
+## Why GLM-5.2 and Not the Others?
 
 I compared three frontier models for code review (full comparison in my previous post), and GLM-5.2 won this specific use case for three reasons:
 
@@ -18,7 +18,7 @@ I compared three frontier models for code review (full comparison in my previous
 2.  **Structured output reliability.** GLM-5.2 consistently produces well-formed JSON when asked to, which matters when you're parsing review comments programmatically and posting them back to GitHub.
 3.  **Appropriate confidence.** The model is willing to say "this looks fine" rather than inventing issues to seem thorough. This is the single most important quality in a code reviewer, human or AI.
 
-### The Setup
+## The Setup
 
 The architecture is simple: a GitHub Actions workflow that triggers on PR open and PR update, sends the diff to GLM-5.2 via API, parses the structured response, and posts comments back to the PR.
 
@@ -75,7 +75,7 @@ Be honest. An empty review is a good review.`;
 
 The critical instruction is the last one. Without it, most LLMs will generate at least one comment on every PR, because they've been trained to be "helpful". In code review, that behaviour is actively harmful — it trains developers to ignore the bot.
 
-### What GLM-5.2 Actually Catches
+## What GLM-5.2 Actually Catches
 
 Over three months and 847 PRs reviewed, here's what the data looks like:
 
@@ -100,7 +100,7 @@ The high-severity catches break down roughly as:
 
 The SQL injection and secret leakage catches alone have paid for the entire setup many times over. GLM-5.2 is genuinely excellent at spotting string-interpolated SQL and `console.log` statements that leak tokens — patterns that human reviewers skim past because they look "normal" in context.
 
-### The False Positives That Waste Time
+## The False Positives That Waste Time
 
 The 23% false positive rate is the painful part. The most common false positives:
 
@@ -112,7 +112,7 @@ The 23% false positive rate is the painful part. The most common false positives
 
 **4. Over-cautious security flags on internal tools.** For internal admin tools, the model flags missing auth checks that are intentionally absent (the tool runs behind an authenticated reverse proxy). The fix: tag internal-only code in `CODEOWNERS` and adjust the prompt based on file path.
 
-### Keeping Humans in the Loop
+## Keeping Humans in the Loop
 
 The biggest mistake I see teams make is treating AI review as a replacement for human review. It is not. It is a first-pass filter that makes human review better. Here's the workflow that works for us:
 
@@ -122,7 +122,7 @@ The biggest mistake I see teams make is treating AI review as a replacement for 
 
 This roughly halved our average PR review time, because human reviewers stopped spending time on the mechanical stuff (missing null checks, N+1 queries, unsafe SQL) and started spending time on the things that actually require human judgement.
 
-### The Prompt Engineering That Actually Matters
+## The Prompt Engineering That Actually Matters
 
 A few prompt techniques that materially improved the quality of reviews:
 
@@ -134,7 +134,7 @@ A few prompt techniques that materially improved the quality of reviews:
 
 **Use few-shot examples of good and bad comments.** I include three examples in the prompt: one real bug the model should have caught, one false positive it should have avoided, and one "empty review is correct" example. This single change dropped the false positive rate from 31% to 23%.
 
-### Cost and Latency in Practice
+## Cost and Latency in Practice
 
 Over three months:
 
@@ -144,7 +144,7 @@ Over three months:
 
 For context, the cheapest human reviewer on the team costs roughly $30/hour. If they spend even 15 minutes per PR on mechanical review, that's $7.50 per PR — 150x the cost of the AI. The AI doesn't replace the human, but it does the part the human is worst at enjoying, for 1/150th the cost.
 
-### Conclusion: The Reviewer That Never Gets Tired
+## Conclusion: The Reviewer That Never Gets Tired
 
 AI-assisted code review with GLM-5.2 has been one of the highest-ROI engineering investments we've made. The setup cost was a weekend. The ongoing cost is negligible. The quality improvement is real and measurable — fewer bugs reach production, PRs review faster, and human reviewers spend their time on work that requires judgement instead of pattern-matching.
 

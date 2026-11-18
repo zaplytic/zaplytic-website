@@ -333,7 +333,7 @@ describe("Values", () => {
       const value = values[i];
       expect(card.getAttribute("type")).toBe("button");
       expect(card.getAttribute("aria-label")).toBe(value.title);
-      expect(text(card.querySelector("h4"))).toBe(value.title);
+      expect(text(card.querySelector("h3"))).toBe(value.title);
       expect(text(card)).toContain(String(i + 1).padStart(2, "0"));
       expect(text(card)).toContain(value.principle);
       expect(card.querySelector("path")!.getAttribute("d")).toBe(VALUE_ICONS[value.icon]);

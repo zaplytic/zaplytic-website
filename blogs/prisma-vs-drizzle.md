@@ -10,7 +10,7 @@ featured: true
 
 In the world of TypeScript, developers are spoiled for choice when it comes to Object-Relational Mappers (ORMs). For a long time, Prisma has been the reigning champion, known for its excellent developer experience and robust type safety. However, a new contender has emerged: Drizzle ORM. Touting itself as a lightweight, SQL-like ORM, Drizzle has quickly gained popularity. So, which one should you choose for your next project? Let's dive in.
 
-### The Philosophies: Abstraction vs. SQL-like
+## The Philosophies: Abstraction vs. SQL-like
 
 The core difference between Prisma and Drizzle lies in their philosophies.
 
@@ -18,7 +18,7 @@ The core difference between Prisma and Drizzle lies in their philosophies.
 
 **Drizzle**, on the other hand, embraces SQL. Its query builder is designed to mirror SQL syntax, making it very intuitive for developers who are already comfortable with SQL. It's often described as "writing SQL with TypeScript."
 
-### Type Safety
+## Type Safety
 
 Both Prisma and Drizzle offer excellent type safety, but they achieve it in different ways.
 
@@ -45,7 +45,7 @@ const user = await db.select()
 ```
 As you can see, the Drizzle query looks much more like SQL.
 
-### Performance
+## Performance
 
 Performance is a key consideration for any database-heavy application.
 
@@ -53,7 +53,7 @@ Performance is a key consideration for any database-heavy application.
 
 - **Prisma** has a more complex query engine. While it's highly optimized, there can be a slight overhead compared to Drizzle. However, for most applications, this difference is negligible.
 
-### Developer Experience
+## Developer Experience
 
 This is where the choice becomes more subjective.
 
@@ -61,7 +61,7 @@ This is where the choice becomes more subjective.
 
 - **Drizzle's DX appeals to developers who want more control** and are comfortable with SQL. It's less "magic" than Prisma, which can be a good thing if you want to understand exactly what's happening under the hood.
 
-### Key Differences at a Glance
+## Key Differences at a Glance
 
 | Feature           | Prisma                               | Drizzle                              |
 | ----------------- | ------------------------------------ | ------------------------------------ |
@@ -71,7 +71,7 @@ This is where the choice becomes more subjective.
 | **Performance**   | Highly optimized, slight overhead    | Very low overhead, close to raw SQL  |
 | **Learning Curve**| Easy for JS/TS developers            | Easy for developers who know SQL     |
 
-### Conclusion: Which One is for You?
+## Conclusion: Which One is for You?
 
 So, who wins the battle? The answer, as is often the case, is: it depends.
 

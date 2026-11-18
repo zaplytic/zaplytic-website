@@ -12,7 +12,7 @@ Let's address the elephant in the room before we even start: in Bangladesh, Andr
 
 So the question isn't "React Native vs Flutter vs Jetpack Compose vs SwiftUI". It's "which of these three gets you to a great Android app fastest, with a team you can actually hire in Dhaka, on hardware your users actually own?" Let's break it down.
 
-### The Three Contenders
+## The Three Contenders
 
 **React Native (RN)** — Facebook's baby, JavaScript-based, renders to native components via a bridge (now the JSI / new architecture in 0.74+). Write once, theoretically ship to iOS and Android.
 
@@ -20,7 +20,7 @@ So the question isn't "React Native vs Flutter vs Jetpack Compose vs SwiftUI". I
 
 **Jetpack Compose** — Google's modern, declarative UI toolkit for native Android. Kotlin-based, Android-only, fully native. No cross-platform story.
 
-### Performance: The Numbers That Actually Matter
+## Performance: The Numbers That Actually Matter
 
 Let's get the synthetic benchmarks out of the way first, then talk about what users actually feel.
 
@@ -30,7 +30,7 @@ Let's get the synthetic benchmarks out of the way first, then talk about what us
 
 For the Bangladesh context specifically, APK size matters more than people think. A lot of your users are on limited data plans and sideloading APKs from share-baze websites. Every megabyte costs you install conversion. Compose wins this category cleanly.
 
-### Developer Velocity
+## Developer Velocity
 
 Here's where it gets interesting and where the BD market reality really bites.
 
@@ -40,7 +40,7 @@ Here's where it gets interesting and where the BD market reality really bites.
 
 **Flutter** has the most enthusiastic community in Bangladesh right now. The Dhaka Flutter meetup group is genuinely active, Google Developer Groups regularly run Flutter workshops, and universities are teaching it. Dart is an easy language to pick up. Dev velocity is high once you're over the initial learning curve. Mid-level Flutter devs sit in the 70,000–130,000 BDT/month range. The single biggest concern is the talent depth — finding a *senior* Flutter engineer who can architect a complex app is harder than finding a senior RN or native engineer.
 
-### The Cross-Platform Question
+## The Cross-Platform Question
 
 Here's the honest truth for the BD market: when you say "we need cross-platform", what you usually mean is "we want to ship Android now and maybe iOS later, with the same team". That's a valid concern. But the math doesn't always work the way people assume.
 
@@ -55,7 +55,7 @@ Cross-platform saves you code reuse. It does not save you the rest of the iOS ta
 
 This is why, for a pure Bangladesh consumer play, I'd seriously consider **Jetpack Compose**. You get the best Android experience possible, the smallest APK, the best performance on cheap hardware, and you're not carrying the cognitive overhead of a cross-platform abstraction you may never use. You can always build a separate iOS app later with SwiftUI when (and if) the business case arrives.
 
-### When Each One Wins
+## When Each One Wins
 
 Let me make it concrete:
 
@@ -63,7 +63,7 @@ Let me make it concrete:
 - **Pick React Native if** you already have a web/React team and want to leverage them, you genuinely plan to ship iOS within 12 months, or you need to share business logic between a web app and a mobile app. The talent pool in Dhaka is the deepest here.
 - **Pick Flutter if** you want consistent UI across platforms (important if brand consistency matters more than native feel), you're starting a team from scratch and want fast onboarding, or your team already knows Dart. The community in Bangladesh is the most active of the three.
 
-### The Hiring Reality
+## The Hiring Reality
 
 I want to double-click on hiring because it's the constraint that actually kills projects in Bangladesh, not the technology choice.
 
@@ -75,7 +75,7 @@ A quick scan of LinkedIn job postings in Dhaka in late 2024 shows roughly 4x mor
 
 For an early-stage startup with limited runway, the ability to hire locally and fast is often the deciding factor, and that pushes the needle toward React Native even when Compose would technically be the better fit. That's not a failure of engineering judgement — it's an honest acknowledgment of the market.
 
-### Conclusion: Pick the Constraint That Bites You Least
+## Conclusion: Pick the Constraint That Bites You Least
 
 There's no winner here. There's the right tool for your specific situation, and the only way to choose well is to be honest about your actual constraints. If you're a funded startup with senior Kotlin talent accessible, Compose gives you the best possible Android product. If you're a small team of web devs who need to ship fast and hire cheap, RN is the pragmatic choice. If you want a single codebase with consistent UI and have access to the Flutter community, Flutter is genuinely great.
 

@@ -10,7 +10,7 @@ featured: true
 
 For years, the `useEffect` hook has been the cornerstone of data fetching in React. While powerful, it's also been a notorious source of confusion, leading to complex state management, race conditions, and an endless array of dependency array gotchas. With the release of React 19, the React team has introduced a new, more elegant way to handle asynchronous operations: the `use` hook.
 
-### The Problem with `useEffect` for Data Fetching
+## The Problem with `useEffect` for Data Fetching
 
 Let's quickly recap the pain points of using `useEffect` for fetching data:
 
@@ -53,7 +53,7 @@ function MyComponent() {
 ```
 That's a lot of code for a simple data fetch!
 
-### Introducing the `use` Hook
+## Introducing the `use` Hook
 
 React 19's `use` hook is a game-changer. It allows you to "unwrap" the value of a Promise directly within your component, almost as if it were a synchronous value. This dramatically simplifies data fetching and other asynchronous operations.
 
@@ -87,17 +87,17 @@ function App() {
 
 Look at how much cleaner that is! All the state management for loading and errors is handled automatically by React.
 
-### Key Benefits of the `use` Hook
+## Key Benefits of the `use` Hook
 
 - **Simplified Code:** No more `useState` for data, loading, and error states.
 - **No Race Conditions:** React handles the lifecycle of the Promise, so you don't have to worry about unmounted components.
 - **Improved Performance:** When combined with a caching mechanism, `use` can prevent redundant data fetches.
 - **Better User Experience:** `<Suspense>` allows you to design more intentional loading states, avoiding jarring layout shifts.
 
-### Is `useEffect` Dead?
+## Is `useEffect` Dead?
 
 Not at all! `useEffect` is still the go-to hook for synchronizing with external systems, such as setting up event listeners, managing timers, or interacting with browser APIs. However, for data fetching and other asynchronous operations that are meant to render something, the `use` hook is the new best practice.
 
-### The Future of React is Asynchronous
+## The Future of React is Asynchronous
 
 The `use` hook is more than just a new API; it represents a fundamental shift in how we write asynchronous code in React. By embracing Promises as a first-class citizen, React 19 paves the way for a new generation of simpler, more robust, and more performant applications. So, the next time you find yourself reaching for `useEffect` to fetch data, take a moment to consider if the `use` hook might be a better fit.

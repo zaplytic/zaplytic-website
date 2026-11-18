@@ -59,7 +59,7 @@ describe("about page", () => {
   const doc = () => page("about.html");
 
   test("shows every value, every team member and the contact section", () => {
-    expect(all(doc(), ".valuecard h4").map(text)).toEqual(values.map((v) => v.title));
+    expect(all(doc(), ".valuecard h3").map(text)).toEqual(values.map((v) => v.title));
     expect(all(doc(), ".teamcard h3").map(text)).toEqual(team.map((m) => m.name));
     expect(doc().getElementById("contact")).not.toBeNull();
     expect(doc().querySelector('#contact a[href^="mailto:"]')).not.toBeNull();

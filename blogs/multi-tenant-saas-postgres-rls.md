@@ -12,7 +12,7 @@ The first time you leak data across tenants in a SaaS app, you'll understand vis
 
 There are three classical approaches to multi-tenancy in a Rails app: separate databases per tenant, separate schemas per tenant, and shared schema with a `tenant_id` column. The first two are clean but operationally expensive. The third is the most common and the most dangerous, because a single missing `where` clause in a single query leaks data across tenants. This is the story of how to do the third approach safely, using Postgres Row-Level Security and the `acts_as_tenant` gem together.
 
-### The Problem with `tenant_id` Columns
+## The Problem with `tenant_id` Columns
 
 The naive approach: every table gets a `tenant_id` column, and every query includes `WHERE tenant_id = ?`. This works for approximately two weeks, until someone writes a new query and forgets the `tenant_id` filter. Or until someone adds a new association and forgets to scope it. Or until a background job runs without tenant context and processes every tenant's data at once.
 
@@ -20,13 +20,13 @@ I've seen all three happen in production. The background job one is the scariest
 
 The fundamental problem is that `tenant_id` filtering is an application-level concern enforced by developer discipline. Developer discipline does not scale. You will forget. Your new hire will forget. The framework should make it impossible to leak data, not merely inadvisable.
 
-### Enter Postgres Row-Level Security
+## Enter Postgres Row-Level Security
 
 Row-Level Security (RLS) is a Postgres feature that moves tenant isolation from the application to the database. When RLS is enabled on a table, every query is automatically filtered by a policy — and there is no way for the application to bypass it without explicitly using a special role.
 
 Here's the core idea: instead of trusting every query to include `WHERE tenant_id = ?`, you tell Postgres "this role can only see rows where `tenant_id` equals the value I set in a session variable." Every query, without exception, is filtered. A forgotten `WHERE` clause is no longer a data leak; it's just a query that returns fewer rows.
 
-### Setting Up RLS
+## Setting Up RLS
 
 First, enable RLS on each tenant-scoped table:
 
@@ -59,7 +59,7 @@ SET app.current_tenant = '42';
 
 And every query on `orders` will automatically be filtered to `WHERE tenant_id = 42`, regardless of what the application wrote in its own `WHERE` clause. A query that forgets to filter by tenant simply returns the correct tenant's rows. A query that tries to filter by the wrong tenant returns nothing. The database enforces isolation, not the application.
 
-### The `acts_as_tenant` Gem: Making It Ergonomic in Rails
+## The `acts_as_tenant` Gem: Making It Ergonomic in Rails
 
 RLS handles the database side, but you still need the application to set the tenant on every request. Doing this manually is error-prone. The `acts_as_tenant` gem handles this cleanly.
 
@@ -130,7 +130,7 @@ SELECT * FROM orders;
 
 You now have two layers of defence: the application-layer scoping from `acts_as_tenant` (which makes the common case ergonomic and raises errors when tenant is missing) and the database-layer enforcement from RLS (which catches anything the application misses).
 
-### Where `acts_as_tenant` Makes Life Easier
+## Where `acts_as_tenant` Makes Life Easier
 
 The gem does more than just add `WHERE account_id = ?` to your queries. A few quality-of-life features that matter:
 
@@ -157,7 +157,7 @@ order.line_items.build(quantity: 2, price: 50)
 # Both order and line_items automatically get the correct account_id
 ```
 
-### The Traps That Will Bite You
+## The Traps That Will Bite You
 
 A few patterns that will still leak data if you're not careful:
 
@@ -193,7 +193,7 @@ end
 
 **4. Cross-tenant associations.** If a model can belong to multiple tenants (rare but happens — shared templates, shared admin users), RLS will block legitimate access. The fix: exclude these models from RLS and handle their scoping explicitly.
 
-### AI-Assisted RLS Auditing
+## AI-Assisted RLS Auditing
 
 One of the more interesting uses of LLMs in 2026 is auditing multi-tenant code for isolation bugs. I've been running GLM-5.2 over the codebase weekly with a prompt that asks it to flag any query, job, or controller action that touches a tenant-scoped model without setting a tenant context.
 
@@ -213,7 +213,7 @@ Be conservative. Flag anything suspicious. False positives are cheap; data leaks
 
 Over three months, this caught two real bugs that RLS would have blocked at runtime but that `acts_as_tenant` would have raised noisy errors on — both in background jobs that had been silently failing for weeks. The combination of RLS (hard enforcement), `acts_as_tenant` (ergonomic scoping + errors), and AI auditing (catching the gaps) is genuinely robust.
 
-### Conclusion: Defence in Depth
+## Conclusion: Defence in Depth
 
 Multi-tenancy is not a feature; it's a security boundary. Treating it as a feature leads to the `tenant_id` column approach, which works until it doesn't. Treating it as a security boundary leads to RLS + `acts_as_tenant` + AI auditing, which fails safe instead of failing open.
 

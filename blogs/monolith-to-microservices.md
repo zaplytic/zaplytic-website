@@ -10,7 +10,7 @@ featured: false
 
 The microservices architecture has been a hot topic for years, promising scalability, flexibility, and independent deployments. But for many developers, the question remains: how do you actually go from a single, monolithic application to a distributed system of microservices? This guide will walk you through the process, using a Node.js application as an example.
 
-### Why Bother with Microservices?
+## Why Bother with Microservices?
 
 Before we dive in, let's quickly recap the benefits. A monolithic application is simpler to develop and deploy initially. However, as it grows, it can become a "big ball of mud"—difficult to maintain, slow to test, and risky to deploy.
 
@@ -21,7 +21,7 @@ Microservices solve these problems by breaking down the application into smaller
 - **Faster Deployments:** Deploy a single service without affecting the rest of the application.
 - **Improved Resilience:** An issue in one service is less likely to bring down the entire application.
 
-### Step 1: Identify Your Bounded Contexts
+## Step 1: Identify Your Bounded Contexts
 
 The first and most critical step is to identify the "bounded contexts" within your monolith. A bounded context is a conceptual boundary within your application that represents a specific business domain. For example, in an e-commerce application, you might have contexts like:
 
@@ -31,7 +31,7 @@ The first and most critical step is to identify the "bounded contexts" within yo
 
 Look for logical seams in your code. Where are the natural divisions? This process, known as domain-driven design (DDD), is crucial for a successful microservices decomposition.
 
-### Step 2: Plan Your Decomposition Strategy
+## Step 2: Plan Your Decomposition Strategy
 
 You don't have to rewrite your entire application at once. In fact, that's usually a bad idea. A better approach is to use the **Strangler Fig Pattern**. This involves gradually "strangling" the monolith by replacing pieces of it with new microservices.
 
@@ -40,7 +40,7 @@ You don't have to rewrite your entire application at once. In fact, that's usual
 3.  **Redirect traffic to the new service.** Use a reverse proxy or an API gateway to route requests for that specific functionality to the new microservice, while all other traffic still goes to the monolith.
 4.  **Repeat the process,** gradually chipping away at the monolith until it's either gone or has shrunk to a manageable size.
 
-### Step 3: Handling Communication Between Services
+## Step 3: Handling Communication Between Services
 
 Once you have multiple services, you need a way for them to communicate. There are two main patterns for this:
 
@@ -63,7 +63,7 @@ messageBroker.subscribe('user.created', async (data) => {
 });
 ```
 
-### Step 4: Containerize Your Services with Docker
+## Step 4: Containerize Your Services with Docker
 
 Docker is an essential tool for managing microservices. By containerizing each service, you create a lightweight, portable package that includes everything the service needs to run. This simplifies deployment and ensures consistency across different environments.
 
@@ -83,6 +83,6 @@ EXPOSE 3000
 CMD [ "node", "server.js" ]
 ```
 
-### Conclusion: A Journey, Not a Destination
+## Conclusion: A Journey, Not a Destination
 
 Decomposing a monolith into microservices is a significant undertaking. It requires careful planning, a deep understanding of your domain, and a shift in mindset. But by following a gradual, iterative approach, you can unlock the benefits of a more scalable, flexible, and resilient architecture. Start small, learn as you go, and remember that it's a journey, not a destination.

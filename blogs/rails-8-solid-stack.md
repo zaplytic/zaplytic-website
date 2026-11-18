@@ -10,7 +10,7 @@ featured: true
 
 David Heinemeier Hansson has been making the same argument for twenty years: complexity is a choice, and the industry keeps choosing it. Rails 8, released in late 2025 and maturing through 2026, is the most compelling version of that argument he's made in a decade. The Solid Stack — Solid Cache, Solid Queue, and Solid Cable — replaces three external dependencies (Redis, Sidekiq, ActionCable's Redis adapter) with SQLite. The deployment story collapses from "provision a web server, a worker, a cache, and a database" to "provision a single box." This sounds small. It is not small.
 
-### The Three Solids
+## The Three Solids
 
 Let's break down what each Solid gem replaces and why it matters.
 
@@ -20,7 +20,7 @@ Let's break down what each Solid gem replaces and why it matters.
 
 **Solid Cable** replaces the Redis adapter for ActionCable (Rails' WebSocket layer). WebSocket subscriptions and broadcasts are tracked in SQLite. For most apps — even apps with hundreds of concurrent connections per server — this is more than sufficient, and it removes the last common reason to add Redis to a Rails deployment.
 
-### The Deployment Story
+## The Deployment Story
 
 This is where the Solid Stack's impact is largest. A standard Rails 7 deployment in 2024 looked like this:
 
@@ -40,7 +40,7 @@ That's it. One box, one process (or a few Puma workers), one database. The cache
 
 This doesn't mean you should run a large-scale production app on a single box forever. It means the default — the thing you get for free, the thing that works on day one without decisions — is a single box. You can scale out later, when you actually need to, by adding Solid Cache's multi-instance support or swapping in Redis for a specific component. But you start simple and add complexity only when measured data justifies it. This is the Rails philosophy in its purest form.
 
-### Performance: Is SQLite Actually Fast Enough?
+## Performance: Is SQLite Actually Fast Enough?
 
 The question everyone asks. The answer, based on six months of production data across three apps I'm running on Rails 8:
 
@@ -52,7 +52,7 @@ The question everyone asks. The answer, based on six months of production data a
 
 The takeaway: SQLite is fast enough for the vast majority of apps. The cases where it's not — high-throughput job processing, multi-server shared caches, massive WebSocket fanout — are the cases where you'd be scaling beyond a single box anyway. The Solid Stack gives you a path to start simple and scale only when you need to.
 
-### Kamal 2: The Other Half of the Story
+## Kamal 2: The Other Half of the Story
 
 Rails 8's deployment story isn't just about the Solid Stack. Kamal 2 — the deployment tool that replaced Capistrano — is the other half. Kamal uses Docker to package your app and deploys it to any server via SSH, with zero-downtime rolling deploys, native Traefik integration for load balancing, and built-in rollback.
 
@@ -66,7 +66,7 @@ That command builds a Docker image, pushes it to a registry, SSHes into your ser
 
 For a team that was previously wrangling Kubernetes manifests, Helm charts, and ingress controllers to deploy a monolith, Kamal is a revelation. You get zero-downtime deploys, rollback, and multi-server scaling without a single YAML file. The trade-off is that Kamal is designed for monoliths — if you're deploying a dozen microservices, you'll want more orchestration than Kamal provides.
 
-### The AI Angle: Rails 8 and LLM Tooling
+## The AI Angle: Rails 8 and LLM Tooling
 
 Here's something that's become clear in 2026: Rails is an exceptionally LLM-friendly framework. I use GLM-5.2 daily for code generation, and the quality of the output for Rails is noticeably better than for most other frameworks. The reason is convention: Rails has strong opinions about where code goes, what files are called, and how things are structured. An LLM generating Rails code doesn't have to make architectural decisions — the conventions make those decisions for it.
 
@@ -87,7 +87,7 @@ This is exactly right — conventions followed, no surprises, no exotic patterns
 
 The Solid Stack amplifies this advantage. When the deployment story is "one box, one command," the LLM can generate not just the application code but the entire deployment configuration. I've had GLM-5.2 generate a complete Rails 8 app — models, controllers, migrations, tests, Dockerfile, Kamal config — and deploy it in under an hour. That's not possible when the framework requires you to make twenty infrastructure decisions before you can ship.
 
-### Where the Solid Stack Falls Short
+## Where the Solid Stack Falls Short
 
 This is not a one-sided story. The Solid Stack has real limitations:
 
@@ -101,7 +101,7 @@ This is not a one-sided story. The Solid Stack has real limitations:
 
 The beautiful thing about the Solid Stack is that none of these limitations lock you in. If you outgrow Solid Cache, you swap `config.cache_store = :solid_cache_store` to `:redis_cache_store` and you're done. If you outgrow Solid Queue, you swap to Sidekiq. The migration paths are clean because the interfaces are the same — the Solid gems implement the standard Rails interfaces, so swapping them out is a configuration change, not a rewrite.
 
-### Conclusion: Simplicity as a Competitive Advantage
+## Conclusion: Simplicity as a Competitive Advantage
 
 The Rails 8 + Solid Stack + Kamal 2 story in 2026 is the strongest argument yet that the industry over-engineered its defaults. For the majority of web apps — SaaS dashboards, content platforms, internal tools, B2B applications — the stack of "Postgres + Redis + Sidekiq + Kubernetes" was always overkill. It was the stack you chose because that's what everyone chose, not because your app needed it.
 

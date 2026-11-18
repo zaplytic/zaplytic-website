@@ -61,6 +61,27 @@
   --tw-prose-td-borders: var(--border);
 }
 
+/* Post sections are ## in Markdown (<h2>, so headings don't skip a level after the title's
+   <h1>) but keep the size and spacing the typography plugin gives <h3>. The plugin's styles
+   use :where(), so these plain selectors win. */
+.prose-post h2 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  line-height: 1.6;
+}
+.prose-post h2 code {
+  font-size: 0.9em;
+}
+@media (min-width: 64rem) {
+  .prose-post h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.6666667em;
+    line-height: 1.3333333;
+  }
+}
+
 @utility activeNav {
   @apply py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-0 font-medium focus:outline-hidden border-fg text-fg hover:text-fg;
 }

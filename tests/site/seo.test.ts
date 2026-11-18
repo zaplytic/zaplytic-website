@@ -124,6 +124,16 @@ describe.each(indexable())("%s", (file) => {
     expect({ width, height }).toEqual({ width: 1200, height: 630 });
   });
 
+  test("headings never skip a level", () => {
+    const levels = [...doc().querySelectorAll("h1, h2, h3, h4, h5, h6")].map((h) =>
+      Number(h.tagName[1])
+    );
+    levels.forEach((level, i) => {
+      const prev = i === 0 ? 0 : levels[i - 1];
+      expect(level, `heading ${i + 1} (h${level}) after h${prev}`).toBeLessThanOrEqual(prev + 1);
+    });
+  });
+
   test("has valid JSON-LD with the organization", () => {
     const nodes = jsonLd(doc());
     expect(nodes.map((n) => n["@type"])).toEqual(

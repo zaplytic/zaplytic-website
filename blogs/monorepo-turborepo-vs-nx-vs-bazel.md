@@ -10,13 +10,13 @@ featured: false
 
 Monorepos were declared dead around 2015, when microservices and polyrepo architectures were the cool kids. They came back. Google, Meta, and Microsoft never left, but now the rest of us can do it too, because the tooling finally caught up. In 2026, if you're running a polyrepo setup with more than five repositories that depend on each other, you're probably spending more time synchronising versions across repos than writing code. The monorepo comeback is real, and the tools driving it are worth understanding.
 
-### Why Monorepos Came Back
+## Why Monorepos Came Back
 
 The polyrepo model breaks down at scale for a specific reason: cross-repo changes. When you need to update a shared library and propagate that change to three consuming apps, the polyrepo workflow is: update the library, publish a new version, update the version in three repos, open three PRs, merge three PRs, deploy three apps. In a monorepo, it's: update the library, open one PR, merge, deploy. The change is atomic — either all apps are updated or none are.
 
 This matters more in 2026 than it did five years ago, for two reasons. First, the rise of design systems and shared component libraries means cross-repo changes are more frequent. Second, AI-assisted coding tools like GLM-5.2 work far better in monorepos, because they can see the entire codebase in one context — every consumer of a function, every implementation of an interface — without needing to be pointed at multiple repositories. The monorepo is the natural habitat of the AI coding assistant.
 
-### The Three Contenders
+## The Three Contenders
 
 **Turborepo** is Vercel's entry — a lightweight, fast build system built in Rust that focuses on doing the minimum necessary: task orchestration, caching, and parallel execution. It's the simplest to set up and the fastest to get value from.
 
@@ -24,7 +24,7 @@ This matters more in 2026 than it did five years ago, for two reasons. First, th
 
 **Bazel** is Google's build system, open-sourced years ago and still the heavyweight champion. It's language-agnostic, hermetic, and designed for enormous codebases. It's also notoriously complex to set up.
 
-### Build Times: The Numbers That Matter
+## Build Times: The Numbers That Matter
 
 I set up the same monorepo — a TypeScript React app, a Node.js API, a shared UI library, and a shared types package — in all three tools and ran a full build with no cache, then a second build with cache:
 
@@ -38,7 +38,7 @@ The cached build times are the interesting numbers. Turborepo and Nx both use co
 
 The setup time column is where most teams make their decision. Turborepo is up and running in 15 minutes. Nx takes an afternoon. Bazel takes days, and requires someone who already knows Bazel — the learning curve is genuinely steep.
 
-### Turborepo: Simplicity Wins
+## Turborepo: Simplicity Wins
 
 Turborepo's philosophy is "do less, but do it fast." The entire configuration is one file:
 
@@ -67,7 +67,7 @@ For a TypeScript/JavaScript monorepo with 5–50 packages, Turborepo is the defa
 
 Where Turborepo falls short: it's JavaScript/TypeScript only (though Python support was added experimentally in late 2025), it doesn't have code generation, and it doesn't understand non-JS languages. If you have a polyglot monorepo (JS frontend, Python backend, Go CLI), Turborepo can't help with the non-JS parts.
 
-### Nx: The Power Tool
+## Nx: The Power Tool
 
 Nx does everything Turborepo does, plus a lot more. The extra features that actually matter:
 
@@ -87,7 +87,7 @@ This creates a new library with the right config, the right build setup, and wir
 
 The cost is complexity. Nx has its own configuration language, its own project structure conventions, and a learning curve that takes a week to climb. For a small team, this is overkill. For a team of 20+ engineers working on a large monorepo, the investment pays off.
 
-### Bazel: The Heavyweight Champion
+## Bazel: The Heavyweight Champion
 
 Bazel is in a different category. It was built for codebases with millions of files and thousands of engineers. If you're not at that scale, Bazel is almost certainly the wrong choice — but if you are, nothing else comes close.
 
@@ -106,7 +106,7 @@ The costs are severe:
 
 My honest recommendation: unless you have 100+ engineers and a codebase in the millions of lines, don't choose Bazel. The operational overhead will eat any gains. If you're at that scale, you probably already have a platform engineering team that can own Bazel.
 
-### The AI Angle: Why Monorepos Matter More in 2026
+## The AI Angle: Why Monorepos Matter More in 2026
 
 Here's something that wasn't true two years ago but is now: LLMs work better in monorepos. When I use GLM-5.2 to refactor a function, the model can see every consumer of that function in the same context. In a polyrepo setup, it can only see the current repo and has to guess at how the change ripples out.
 
@@ -114,7 +114,7 @@ This is a real, measurable difference. I ran an experiment: take a shared utilit
 
 As AI coding tools become a standard part of the workflow in 2026, the monorepo advantage compounds. The model that can see your entire codebase produces better refactors, better reviews, and better tests than the model that can see one repo at a time. This alone is pushing teams that were on the fence toward monorepos.
 
-### Which One Should You Pick?
+## Which One Should You Pick?
 
 - **Turborepo** if you have a JS/TS monorepo with fewer than 50 packages and want something that works in 15 minutes. This is what I'd recommend for 80% of teams in 2026.
 - **Nx** if you need code generation, polyglot support, or have a larger team that benefits from the dependency graph tooling. Worth the setup cost if you're going to be in this codebase for years.

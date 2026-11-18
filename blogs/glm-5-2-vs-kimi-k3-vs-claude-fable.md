@@ -10,7 +10,7 @@ featured: true
 
 Three models have pulled away from the pack in 2026: GLM-5.2 from Zhipu AI, Kimi K3 from Moonshot, and Claude Fable from Anthropic. Everything else is playing catch-up. If you're a developer trying to decide which one to wire into your app, your editor, or your agentic pipeline, the marketing pages won't help you — they all claim to be the best. I've spent the last two months using all three daily, on real work, and this is what I actually found.
 
-### The Contenders
+## The Contenders
 
 **GLM-5.2** is Zhipu's latest open-weight model. It's the one I run locally and through APIs most often, partly because the pricing is aggressive and partly because the tool-calling is genuinely good. The open-weight nature means you can self-host if latency or data residency matters to you.
 
@@ -18,7 +18,7 @@ Three models have pulled away from the pack in 2026: GLM-5.2 from Zhipu AI, Kimi
 
 **Claude Fable** is Anthropic's 2026 flagship. The name is a nod to their character-training approach — Fable is specifically tuned to be collaborative and honest rather than sycophantic, and it shows in how it handles uncertain answers. It's the most expensive of the three and, for many tasks, the most capable.
 
-### Coding Benchmarks: The Synthetic Numbers
+## Coding Benchmarks: The Synthetic Numbers
 
 Let's get the benchmark numbers out of the way, then talk about what actually matters.
 
@@ -31,7 +31,7 @@ Let's get the benchmark numbers out of the way, then talk about what actually ma
 
 Claude Fable leads on most synthetic benchmarks. That's not surprising — Anthropic has been dominant on coding evaluations for two years. But here's the thing the benchmarks don't tell you: the gap between 68% and 75% on SWE-bench is the difference between "solves most well-specified bugs" and "solves most well-specified bugs slightly more often". In real development work, the difference is far less dramatic than the numbers suggest.
 
-### Real-World Coding: What Actually Happens
+## Real-World Coding: What Actually Happens
 
 I ran all three models through the same set of real tasks over two months:
 
@@ -49,7 +49,7 @@ Here's what I found in practice:
 
 **Kimi K3** is the long-context specialist. I tested it on a 180,000-token codebase — the entire backend of a medium Rails app — and asked it to identify where a particular race condition could occur. It found two real issues that the other models missed, because it could hold the entire call chain in context simultaneously. For tasks that require reasoning across a large codebase, K3 is genuinely the best. Where it struggles is fast iteration: the large context window means each call is slower and more expensive, so it's not the model you want for quick back-and-forth coding.
 
-### Long-Context Handling
+## Long-Context Handling
 
 Context window sizes in 2026:
 
@@ -61,7 +61,7 @@ Kimi K3's 2M window is genuinely useful for a specific kind of task: "here's my 
 
 My rule of thumb: if your prompt is under 200K tokens, use GLM-5.2 or Fable. If you genuinely need to reason over a massive codebase in a single pass, use K3. If you're not sure, you probably don't need the 2M window — chunk your input and use the cheaper model.
 
-### Agentic Tasks and Tool Use
+## Agentic Tasks and Tool Use
 
 This is where 2026 has seen the biggest shift. All three models now support complex tool-calling (function calling, parallel tool use, multi-turn agentic loops), but the quality varies significantly.
 
@@ -71,7 +71,7 @@ This is where 2026 has seen the biggest shift. All three models now support comp
 
 **Claude Fable** is the best at recovery. When an agentic loop fails — a tool returns an error, an API is down, a test fails — Fable adapts and retries with a different approach more often than the other two. This matters more than people realise; in production agentic systems, the ability to recover from failure is worth more than raw task-completion rate.
 
-### Pricing: The Real Differentiator
+## Pricing: The Real Differentiator
 
 As of early 2026:
 
@@ -89,7 +89,7 @@ For a typical coding assistant session (roughly 50K input, 5K output per task), 
 
 If you're running an agentic loop that makes 20 calls per task, multiply accordingly. At scale, the price difference between GLM-5.2 and Fable is the difference between a sustainable product and a burn rate that scares your investors.
 
-### When to Use Which
+## When to Use Which
 
 After two months, my decision tree looks like this:
 
@@ -99,7 +99,7 @@ After two months, my decision tree looks like this:
 - **Agentic pipelines with many tool calls:** GLM-5.2 for cost, Fable for reliability if budget allows.
 - **Self-hosted / on-prem / data-sensitive:** GLM-5.2. It's the only frontier model with open weights in 2026.
 
-### The Honest Verdict
+## The Honest Verdict
 
 There is no single best model in 2026. There's the best model for a specific task, and the gap between the three is narrow enough that cost, latency, and workflow fit often matter more than the benchmark delta. If I had to pick one for a small team with a limited budget, I'd pick GLM-5.2 and spend the savings on better tooling around it. If I had an unlimited budget and wanted the best possible output on hard problems, I'd pick Claude Fable. If I were building a code-analysis tool that needed to ingest entire repos, I'd pick Kimi K3.
 

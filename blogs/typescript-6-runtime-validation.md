@@ -10,7 +10,7 @@ featured: true
 
 Here's a dirty secret about TypeScript that every experienced developer learns eventually: types are a lie. Not always, not everywhere, but at every system boundary — every API response, every parsed JSON file, every user input — the types you've so carefully declared exist only in the compiler's imagination. At runtime, the data is whatever the network handed you, and the network does not care about your `interface`. TypeScript 6.0, released in early 2026, takes a meaningful step toward closing this gap, but the gap is not closed. Let's talk about what changed, what didn't, and why you probably still need zod.
 
-### The Type-Runtime Gap, Briefly
+## The Type-Runtime Gap, Briefly
 
 The classic example:
 
@@ -31,7 +31,7 @@ This is why runtime validation libraries like zod, joi, and valibot exist. They 
 
 TypeScript 6.0 doesn't eliminate this need, but it narrows it in ways worth understanding.
 
-### What TypeScript 6.0 Actually Changed
+## What TypeScript 6.0 Actually Changed
 
 Three features in 6.0 are relevant to the type-runtime question:
 
@@ -56,7 +56,7 @@ This is not built into TypeScript — the `@validate` decorator is something you
 
 **3. `satisfies` operator improvements.** The `satisfies` operator (introduced in 4.9, refined in 6.0) lets you check that an expression matches a type without widening it. This is useful for config objects and API response handlers where you want both type safety and the narrowest possible type.
 
-### The Real Question: Can You Drop zod Yet?
+## The Real Question: Can You Drop zod Yet?
 
 No. But the cases where you need it are fewer than they used to be.
 
@@ -90,7 +90,7 @@ function formatUser(u: User): string {
 
 This is the same advice I'd have given in 2024. What changed in 2026 is that the tools for generating validators from types — `typia`, `@deepkit/type`, `zod-to-ts` — have matured enough that you can often skip writing the schema manually and derive it from the type (or vice versa).
 
-### The Typia Approach: Types as Validators
+## The Typia Approach: Types as Validators
 
 `typia` is the most interesting library in this space in 2026. It uses TypeScript's compiler API to generate runtime validation functions directly from your types — no separate schema definition:
 
@@ -116,7 +116,7 @@ The magic is in the `tags` — these are phantom types that exist only in TypeSc
 
 This is the closest thing to "closing the gap" that exists in 2026. The downside: it requires a compiler plugin (or build-time code generation), which adds a build step. It's not as drop-in as zod. But for teams that control their build pipeline, it's genuinely transformative — no more maintaining two definitions of the same data shape.
 
-### The AI Angle: When the LLM Writes the Types
+## The AI Angle: When the LLM Writes the Types
 
 Here's a 2026-specific consideration I didn't expect to matter: when you use an LLM like GLM-5.2 to generate code, it generates types and it generates runtime validation, and keeping them in sync is harder than when a human does it. A human feels the pain of maintaining duplicate definitions and is motivated to refactor. An LLM doesn't feel pain; it just generates more duplicate definitions until your codebase is full of them.
 
@@ -126,7 +126,7 @@ The typia approach (one definition, both compile-time and runtime) is dramatical
 
 If you're doing heavy AI-assisted development in 2026, this is a real reason to prefer the typia approach over manual zod schemas. The fewer places where an LLM can introduce a subtle inconsistency, the better.
 
-### When You Still Need zod
+## When You Still Need zod
 
 Despite all of the above, zod is not going anywhere in 2026. It's still the right choice when:
 
@@ -135,7 +135,7 @@ Despite all of the above, zod is not going anywhere in 2026. It's still the righ
 - **You need the error messages to be user-friendly.** zod's error reporting is excellent and customisable. typia's is functional but less polished.
 - **Your team already knows zod.** The switching cost of moving to typia (compiler plugin, different mental model, less ecosystem support) is real, and for many teams the existing zod setup is working fine.
 
-### Conclusion: The Gap Narrows, It Doesn't Close
+## Conclusion: The Gap Narrows, It Doesn't Close
 
 TypeScript 6.0 is a meaningful step forward. The decorator metadata, the inference improvements, and the ecosystem maturity of tools like typia mean that the type-runtime gap is narrower in 2026 than it's ever been. But the gap exists because of a fundamental truth: compile-time types are a development-time aid, and runtime data is a production reality. No amount of compiler innovation changes the fact that the network can send you anything.
 

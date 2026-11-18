@@ -12,7 +12,7 @@ If you're running Postgres in production and your architecture is "one primary, 
 
 The fix is high availability: a primary that can fail over automatically to a replica when things go wrong, with clients none the wiser. In the Postgres world, the stack most people converge on in 2025 is **Patroni + etcd + HAProxy**. Let's walk through what each piece does, how to set them up, and where the sharp edges are.
 
-### The Architecture at a Glance
+## The Architecture at a Glance
 
 Three moving parts, each with a clear job:
 
@@ -30,7 +30,7 @@ App --> HAProxy --> Primary Postgres (Patroni-managed)
             etcd cluster (3 nodes) <-- Patroni on each Postgres node
 ```
 
-### Why Not Just Use Streaming Replication?
+## Why Not Just Use Streaming Replication?
 
 Postgres has built-in streaming replication. You set up a primary, configure a replica with a `primary_conninfo`, and you have a hot standby. Why do you need Patroni on top?
 
@@ -38,7 +38,7 @@ Because streaming replication only gives you a *replica*. It doesn't give you *a
 
 Patroni adds the brain that detects the primary is down, picks the most-recent replica, promotes it, updates etcd so all other nodes know about the new topology, and reconfigures them to follow the new primary. All without a human in the loop, typically in 10–30 seconds.
 
-### Step 1: Set Up etcd
+## Step 1: Set Up etcd
 
 You need an etcd cluster of 3 nodes (minimum) running separately from your Postgres nodes. They can be small VMs — etcd is lightweight. Here's the config for one node:
 
@@ -64,7 +64,7 @@ etcdctl --endpoints=http://10.0.0.1:2379,http://10.0.0.2:2379,http://10.0.0.3:23
 
 You should see all three endpoints report `is healthy`. If any one is down, fix that before proceeding — Patroni will not behave correctly with a sick etcd cluster.
 
-### Step 2: Configure Patroni
+## Step 2: Configure Patroni
 
 On each Postgres node, install Patroni (`pip install patroni[etcd]`) and create a config file. Here's a working example for node 1:
 
@@ -147,7 +147,7 @@ You should see something like:
 | pg-node-3 | 10.0.1.3  | Replica | streaming | 1 |         0 |
 ```
 
-### Step 3: HAProxy as the Traffic Cop
+## Step 3: HAProxy as the Traffic Cop
 
 HAProxy sits in front of all Postgres nodes and uses Patroni's REST API to figure out which node is the primary. The config:
 
@@ -199,7 +199,7 @@ So HAProxy will only route writes to the primary, and when failover happens, wit
 
 Your app's connection string becomes a single hostname: `postgres://app:password@haproxy:5432/app_db`. Writes go through the write frontend. If you want read scaling, point read-heavy queries at port 5433 and they'll be load-balanced across replicas.
 
-### Step 4: Test the Failover (Before Production Does)
+## Step 4: Test the Failover (Before Production Does)
 
 The single most important step in this whole setup is to test failover yourself, in staging, before production tests it for you. The command is trivial:
 
@@ -213,7 +213,7 @@ Then test a *real* failure: kill the Patroni process on the primary (`kill -9`),
 
 If you've never run this test, you don't have high availability. You have the *appearance* of high availability, which is worse, because it makes you overconfident.
 
-### The Failure Modes Nobody Mentions
+## The Failure Modes Nobody Mentions
 
 This stack is solid, but it has sharp edges. The ones that have bitten me:
 
@@ -222,7 +222,7 @@ This stack is solid, but it has sharp edges. The ones that have bitten me:
 - **etcd is itself a single point of coordination.** If you lose 2 of 3 etcd nodes, Patroni loses quorum and cannot elect a leader. Your existing primary will actually *step down* rather than risk split-brain. This is the correct behaviour, but it means an etcd outage takes down your Postgres cluster even if all Postgres nodes are healthy. Run etcd on separate infrastructure from Postgres.
 - **HAProxy is now a critical component.** If HAProxy itself dies, your app can't reach Postgres even though Postgres is fine. Run HAProxy in a high-availability configuration (keepalived with VRRP) or use a managed load balancer in front of it.
 
-### Monitoring: What to Watch
+## Monitoring: What to Watch
 
 The non-negotiable alerts for this stack:
 
@@ -232,7 +232,7 @@ The non-negotiable alerts for this stack:
 4.  **HAProxy backend health** — alert if any Postgres backend is marked down.
 5.  **Connection pool saturation** — if you're using PgBouncer in front of Postgres (you should be), alert on pool saturation. Failover is meaningless if your connection pool is exhausted.
 
-### Conclusion: HA Is a Mindset, Not a Setup
+## Conclusion: HA Is a Mindset, Not a Setup
 
 The Patroni + etcd + HAProxy stack works. It's the architecture used by Zalando (who created Patroni), by Compose, by Aiven, and by countless teams running Postgres at scale. The components are mature and battle-tested. But the stack itself is only half the equation. The other half — the half that actually determines whether you'll survive a production failure — is the operational discipline around it. Test your failovers. Monitor your lag. Understand your failure modes. Page yourself when etcd hiccups.
 
