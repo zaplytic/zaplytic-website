@@ -1,4 +1,5 @@
 ---
+import { ogImageForPage } from "@/lib/og";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AnimatedBackground from "@/components/AnimatedBackground.astro";
 import ProductCard from "@/components/ProductCard.astro";
@@ -45,6 +46,7 @@ const itemList = {
 
 <BaseLayout
   title="Products"
+  image={ogImageForPage("products")}
   description="SaaS products, client projects and open-source tools built by Zaplytic — including ZapRoute, ZapMemo, AMC-Booster and RailGuard."
   jsonLd={[itemList]}
 >

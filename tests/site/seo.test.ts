@@ -1,7 +1,19 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import sharp from "sharp";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
-import { SITE, fileFor, htmlFiles, jsonLd, meta, page, read, sitemapUrls, urlFor } from "./site";
+import {
+  SITE,
+  fileFor,
+  htmlFiles,
+  jsonLd,
+  meta,
+  page,
+  read,
+  siteDir,
+  sitemapUrls,
+  urlFor
+} from "./site";
 
 const blogDir = join(process.cwd(), "blogs");
 const blogSlugs = readdirSync(blogDir)
@@ -99,6 +111,19 @@ describe.each(indexable())("%s", (file) => {
     }
   });
 
+  test("has a 1200×630 link preview image that is built and small enough for WhatsApp", async () => {
+    const image = meta(doc(), "og:image")!;
+    expect(image).toMatch(/^https:\/\/zaplytic\.dev\/og\/.+\.png$/);
+    expect(meta(doc(), "twitter:image")).toBe(image);
+    expect(meta(doc(), "twitter:card")).toBe("summary_large_image");
+    expect(meta(doc(), "og:image:alt")).toBeTruthy();
+    const file = join(siteDir(), new URL(image).pathname);
+    expect(existsSync(file), file).toBe(true);
+    expect(statSync(file).size).toBeLessThan(300 * 1024);
+    const { width, height } = await sharp(file).metadata();
+    expect({ width, height }).toEqual({ width: 1200, height: 630 });
+  });
+
   test("has valid JSON-LD with the organization", () => {
     const nodes = jsonLd(doc());
     expect(nodes.map((n) => n["@type"])).toEqual(
@@ -152,5 +177,36 @@ describe.each(indexable())("%s", (file) => {
     );
     const section = "/" + (urlFor(file).replace(SITE, "").split("/")[1] ?? "");
     expect(active).toEqual([section === "/" ? "/" : section]);
+  });
+});
+
+describe("link preview images and icons", () => {
+  test("every blog post has its own preview image", () => {
+    for (const slug of blogSlugs) {
+      expect(meta(page(`blog/${slug}.html`), "og:image")).toBe(`${SITE}/og/blog/${slug}.png`);
+    }
+  });
+
+  test("fixed pages have their own preview image", () => {
+    expect(meta(page("index.html"), "og:image")).toBe(`${SITE}/og/index.png`);
+    expect(meta(page("about.html"), "og:image")).toBe(`${SITE}/og/about.png`);
+    expect(meta(page("products.html"), "og:image")).toBe(`${SITE}/og/products.png`);
+    expect(meta(page("blog.html"), "og:image")).toBe(`${SITE}/og/blog.png`);
+  });
+
+  test("the organization logo and apple-touch-icon are built as PNGs", async () => {
+    const logo = jsonLd(page("index.html")).find((n) => n["@type"] === "Organization")!.logo as {
+      url: string;
+    };
+    for (const [path, size] of [
+      [new URL(logo.url).pathname, 512],
+      ["/apple-touch-icon.png", 180]
+    ] as const) {
+      const { format, width, height } = await sharp(join(siteDir(), path)).metadata();
+      expect({ format, width, height }).toEqual({ format: "png", width: size, height: size });
+    }
+    expect(
+      page("index.html").querySelector('link[rel="apple-touch-icon"]')!.getAttribute("href")
+    ).toBe("/apple-touch-icon.png");
   });
 });

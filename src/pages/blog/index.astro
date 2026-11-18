@@ -1,4 +1,5 @@
 ---
+import { ogImageForPage } from "@/lib/og";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getSortedPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
@@ -22,6 +23,7 @@ const blog = {
 
 <BaseLayout
   title="Blog"
+  image={ogImageForPage("blog")}
   description="Engineering notes from Zaplytic on Rails, React, TypeScript, Postgres, architecture and building software in Bangladesh."
   jsonLd={[blog]}
 >

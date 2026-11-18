@@ -1,4 +1,5 @@
 ---
+import { ogImageForPage } from "@/lib/og";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AnimatedBackground from "@/components/AnimatedBackground.astro";
 import SocialIcon from "@/components/SocialIcon.astro";
@@ -29,6 +30,7 @@ const aboutPage = {
 
 <BaseLayout
   title="About"
+  image={ogImageForPage("about")}
   description="Zaplytic is a small studio of four building high-quality, easy-to-use open-source tools and SaaS products that solve real-world problems. Meet the team and get in touch."
   jsonLd={[aboutPage]}
 >

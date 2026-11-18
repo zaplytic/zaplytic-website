@@ -7,17 +7,17 @@ toggle, mobile menu, card tilt, and a scroll-reveal observer), about 1.5 KB gzip
 
 ## Development
 
-Requires Node.js 22.23.4 or newer.
+Requires [Bun](https://bun.sh) 1.3.10+ (package manager) and Node.js 22.23.4 or newer (runtime for Astro, Vitest and Playwright).
 
 ```bash
 bun install
-bun run dev       # dev server on http://localhost:4321
-bun run build     # type-check (astro check) and build to dist/
-bun run preview   # serve the production build
-bun run test      # all tests (unit + built-site)
-bun run test:unit # scripts, data and components only (fast)
-bun run test:site # builds the site and checks every generated page
-bun run test:visual # screenshot comparison of the built site (run `bun run build` first)
+bun run dev           # dev server on http://localhost:4321
+bun run build         # type-check (astro check) and build to dist/
+bun run preview       # serve the production build
+bun run test          # all tests (unit + built-site)
+bun run test:unit     # scripts, data and components only (fast)
+bun run test:site     # builds the site and checks every generated page
+bun run test:visual   # screenshot comparison of the built site (run `bun run build` first)
 bun run lint
 ```
 

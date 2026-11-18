@@ -60,10 +60,35 @@ describe("Seo", () => {
     expect(attr(doc, 'meta[property="og:type"]')).toBe("website");
     expect(attr(doc, 'meta[property="og:site_name"]')).toBe("Zaplytic");
     expect(attr(doc, 'meta[property="og:locale"]')).toBe("en_US");
-    expect(attr(doc, 'meta[name="twitter:card"]')).toBe("summary");
+    expect(attr(doc, 'meta[name="twitter:card"]')).toBe("summary_large_image");
+    expect(attr(doc, 'meta[name="twitter:site"]')).toBe("@nullscribe");
     expect(attr(doc, 'meta[name="twitter:creator"]')).toBe("@nullscribe");
     expect(doc.querySelector('meta[property^="article:"]')).toBeNull();
     expect(doc.querySelector('meta[name="robots"]')).toBeNull();
+  });
+
+  test("link preview image defaults to the site card, as an absolute URL with size and alt", async () => {
+    const doc = await renderSeo("/", { description: "x" });
+    expect(attr(doc, 'meta[property="og:image"]')).toBe("https://zaplytic.dev/og/index.png");
+    expect(attr(doc, 'meta[property="og:image:secure_url"]')).toBe(
+      "https://zaplytic.dev/og/index.png"
+    );
+    expect(attr(doc, 'meta[property="og:image:type"]')).toBe("image/png");
+    expect(attr(doc, 'meta[property="og:image:width"]')).toBe("1200");
+    expect(attr(doc, 'meta[property="og:image:height"]')).toBe("630");
+    expect(attr(doc, 'meta[property="og:image:alt"]')).toMatch(/^Zaplytic: /);
+    expect(attr(doc, 'meta[name="twitter:image"]')).toBe("https://zaplytic.dev/og/index.png");
+    expect(attr(doc, 'meta[name="twitter:image:alt"]')).toMatch(/^Zaplytic: /);
+  });
+
+  test("a page can pass its own preview image", async () => {
+    const doc = await renderSeo("/blog/a-post", {
+      description: "x",
+      image: { path: "/og/blog/a-post.png", alt: "A post" }
+    });
+    expect(attr(doc, 'meta[property="og:image"]')).toBe("https://zaplytic.dev/og/blog/a-post.png");
+    expect(attr(doc, 'meta[name="twitter:image"]')).toBe("https://zaplytic.dev/og/blog/a-post.png");
+    expect(attr(doc, 'meta[property="og:image:alt"]')).toBe("A post");
   });
 
   test("articles get published time, author, tags and keywords", async () => {
@@ -95,7 +120,12 @@ describe("Seo", () => {
       "@id": "https://zaplytic.dev/#organization",
       name: "Zaplytic",
       url: "https://zaplytic.dev",
-      logo: "https://zaplytic.dev/favicon.svg",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://zaplytic.dev/logo.png",
+        width: 512,
+        height: 512
+      },
       email: "zaplytic@gmail.com",
       sameAs: ["https://github.com/zaplytic"]
     });
