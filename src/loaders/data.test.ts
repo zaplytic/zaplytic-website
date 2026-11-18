@@ -101,6 +101,13 @@ describe("contact and socials", () => {
     expect(socials.find((s) => s.label === "Email")?.href).toBe(`mailto:${CONTACT_EMAIL}`);
   });
 
+  test("socials are email, Facebook and GitHub", () => {
+    expect(socials.map((s) => s.label)).toEqual(["Email", "Facebook", "GitHub"]);
+    expect(socials.find((s) => s.label === "Facebook")?.href).toBe(
+      "https://www.facebook.com/zaplytic"
+    );
+  });
+
   test("every social link has an icon and a secure URL", () => {
     for (const s of socials) {
       expect(SOCIAL_ICONS[s.label], s.label).toBeTruthy();

@@ -61,8 +61,7 @@ describe("Seo", () => {
     expect(attr(doc, 'meta[property="og:site_name"]')).toBe("Zaplytic");
     expect(attr(doc, 'meta[property="og:locale"]')).toBe("en_US");
     expect(attr(doc, 'meta[name="twitter:card"]')).toBe("summary_large_image");
-    expect(attr(doc, 'meta[name="twitter:site"]')).toBe("@nullscribe");
-    expect(attr(doc, 'meta[name="twitter:creator"]')).toBe("@nullscribe");
+    expect(doc.querySelector('meta[name="twitter:site"], meta[name="twitter:creator"]')).toBeNull();
     expect(doc.querySelector('meta[property^="article:"]')).toBeNull();
     expect(doc.querySelector('meta[name="robots"]')).toBeNull();
   });
@@ -101,6 +100,9 @@ describe("Seo", () => {
     expect(attr(doc, 'meta[property="og:type"]')).toBe("article");
     expect(attr(doc, 'meta[property="article:published_time"]')).toBe("2026-01-14");
     expect(attr(doc, 'meta[property="article:author"]')).toBe("Jahid Hasan");
+    expect(attr(doc, 'meta[property="article:publisher"]')).toBe(
+      "https://www.facebook.com/zaplytic"
+    );
     expect(
       [...doc.querySelectorAll('meta[property="article:tag"]')].map((m) =>
         m.getAttribute("content")
@@ -127,7 +129,7 @@ describe("Seo", () => {
         height: 512
       },
       email: "zaplytic@gmail.com",
-      sameAs: ["https://github.com/zaplytic"]
+      sameAs: ["https://www.facebook.com/zaplytic", "https://github.com/zaplytic"]
     });
     expect(site).toMatchObject({
       "@type": "WebSite",

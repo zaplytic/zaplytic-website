@@ -1,3 +1,4 @@
+import { FACEBOOK_URL } from "@/lib/site";
 export type Role = "Founder & Engineer" | "Product R&D" | "Design" | "Corporate Relations";
 
 export interface Member {
@@ -92,7 +93,6 @@ export const CONTACT_EMAIL = "zaplytic@gmail.com";
 
 export const socials = [
   { label: "Email", href: `mailto:${CONTACT_EMAIL}` },
-  { label: "Twitter", href: "https://www.twitter.com" },
-  { label: "GitHub", href: "https://www.github.com/zaplytic" },
-  { label: "Slack", href: "https://www.slack.com" }
+  { label: "Facebook", href: FACEBOOK_URL },
+  { label: "GitHub", href: "https://www.github.com/zaplytic" }
 ] as const;
