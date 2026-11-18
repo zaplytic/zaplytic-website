@@ -379,6 +379,11 @@ describe("CSS motion markup", () => {
     );
   });
 
+  test("the subtitle (the page's LCP text) slides in without fading, so it paints at once", async () => {
+    const doc = await render(Hero);
+    expect(styleOf(doc.querySelector("#hero-subtitle")!)).toContain("--from-opacity: 1");
+  });
+
   test("services reveal at 80% with cards staggered in order", async () => {
     const doc = await render(Services);
     expect(doc.querySelector("#services-section")!.getAttribute("data-reveal")).toBe("80");

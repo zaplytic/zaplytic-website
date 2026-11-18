@@ -6,7 +6,12 @@
 <script>
   import { initAnimatedBackground } from "@/scripts/background";
 
-  document.querySelectorAll<HTMLCanvasElement>("[data-animated-background]").forEach((canvas) => {
-    initAnimatedBackground(canvas);
-  });
+  // Decorative, so it waits until the page has painted: sizing the canvas reads layout, which
+  // would otherwise force a synchronous reflow during the initial render.
+  const start = () =>
+    document.querySelectorAll<HTMLCanvasElement>("[data-animated-background]").forEach((canvas) => {
+      initAnimatedBackground(canvas);
+    });
+  if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 1000 });
+  else setTimeout(start, 200);
 </script>

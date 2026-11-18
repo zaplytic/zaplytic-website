@@ -9,6 +9,8 @@ const words = ["Developers", "Businesses", "Founders"];
 const start = splitWords("Empowering");
 const end = splitWords("with High-Quality Softwares");
 const offsets = flyInOffsets(start.length + end.length);
+// The subtitle is the page's largest text (its LCP element), so it slides up without fading in:
+// Chrome doesn't count text as painted while it is transparent, and a fade delays LCP.
 // Hyphenated subtitle words are kept whole (nowrap), as they were when SplitText split the
 // subtitle into words, so it wraps at the same place.
 const fly = (i: number) =>
@@ -55,7 +57,7 @@ const fly = (i: number) =>
       <p
         class="motion text-lg text-fg-muted"
         id="hero-subtitle"
-        style="--from-y: 100%; --duration: 1s; --ease: var(--ease-in-out-expo)"
+        style="--from-y: 100%; --from-opacity: 1; --duration: 1s; --ease: var(--ease-in-out-expo)"
       >
         An independent product studio architecting robust and scalable SaaS systems, <span
           class="whitespace-nowrap">high-performance</span
