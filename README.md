@@ -10,15 +10,15 @@ toggle, mobile menu, card tilt, and a scroll-reveal observer), about 1.5 KB gzip
 Requires Node.js 22.23.4 or newer.
 
 ```bash
-yarn install
-yarn dev       # dev server on http://localhost:4321
-yarn build     # type-check (astro check) and build to dist/
-yarn preview   # serve the production build
-yarn test      # all tests (unit + built-site)
-yarn test:unit # scripts, data and components only (fast)
-yarn test:site # builds the site and checks every generated page
-yarn test:visual # screenshot comparison of the built site (run `yarn build` first)
-yarn lint
+bun install
+bun run dev       # dev server on http://localhost:4321
+bun run build     # type-check (astro check) and build to dist/
+bun run preview   # serve the production build
+bun run test      # all tests (unit + built-site)
+bun run test:unit # scripts, data and components only (fast)
+bun run test:site # builds the site and checks every generated page
+bun run test:visual # screenshot comparison of the built site (run `bun run build` first)
+bun run lint
 ```
 
 ## Structure
@@ -63,6 +63,6 @@ The sitemap (`/sitemap-index.xml`) is generated automatically on build.
   plus the open mobile menu and theme toggle, compared pixel for pixel with the baselines in
   `tests/visual/__screenshots__`. Time is frozen and motion reduced so runs are deterministic.
   The baselines were verified identical to the original Vite site before the Astro migration.
-  After an intended design change, accept it with `yarn test:visual --update-snapshots`.
+  After an intended design change, accept it with `bun run test:visual --update-snapshots`.
   Screenshots depend on the OS's font rendering, so record and compare on the same platform
   (the baselines were recorded on macOS).

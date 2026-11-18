@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "0.0.0",
   "type": "module",
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "bun@1.3.10",
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro check && astro build",
@@ -17,8 +17,8 @@
     "test:visual": "playwright test",
     "coverage": "vitest run --coverage",
     "prepare": "husky",
-    "reset": "rm -rf node_modules && yarn install",
-    "reset:hard": "rm -rf node_modules yarn.lock && yarn install"
+    "reset": "rm -rf node_modules && bun install",
+    "reset:hard": "rm -rf node_modules bun.lock && bun install"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.10",

@@ -4,8 +4,8 @@ import { defineConfig } from "@playwright/test";
  * Visual regression tests. They screenshot the built site (dist/ by default) and compare
  * against the baselines in tests/visual/__screenshots__.
  *
- *   yarn build && yarn test:visual            # compare
- *   yarn test:visual --update-snapshots       # accept intended visual changes
+ *   bun run build && bun run test:visual            # compare
+ *   bun run test:visual --update-snapshots       # accept intended visual changes
  *
  * VISUAL_SITE_DIR points the tests at another build (e.g. an older release) instead.
  */
