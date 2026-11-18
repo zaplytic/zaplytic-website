@@ -22,7 +22,8 @@
   --bg-hover: #e5e5e5;
   --fg: #171717;
   --fg-muted: #525252;
-  --fg-subtle: #737373;
+  /* Darkest grey that still reads as "subtle"; ≥4.5:1 on --bg-subtle (WCAG AA) */
+  --fg-subtle: #6b6b6b;
   --border: #e5e5e5;
   --border-strong: #d4d4d4;
   --canvas-bg: #ffffff;
@@ -35,7 +36,8 @@
   --bg-hover: #404040;
   --fg: #e5e5e5;
   --fg-muted: #a3a3a3;
-  --fg-subtle: #737373;
+  /* ≥4.5:1 on --bg and --bg-subtle (WCAG AA) */
+  --fg-subtle: #858585;
   --border: #262626;
   --border-strong: #404040;
   --canvas-bg: #0a0a0a;
